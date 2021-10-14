@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Eisenhower Matrix';
+  public titleLeftAddSection = 'Done';
+  public titleRigthAddSection = 'Backlog';
+  public titleNowCard = 'Now';
+  public titleOwnCard = 'Own';
+  public titleDelegateCard = 'Delegate';
+  public titleTrashCard = 'Trash';
 }

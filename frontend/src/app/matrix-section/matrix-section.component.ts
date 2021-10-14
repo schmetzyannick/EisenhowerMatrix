@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-matrix-section',
@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./matrix-section.component.scss'],
 })
 export class MatrixSectionComponent implements OnInit {
+  @Input() title: string;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    this.title = '';
   }
 
+  ngOnInit(): void {}
 }
