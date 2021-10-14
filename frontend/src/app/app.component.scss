@@ -11,3 +11,15 @@
     padding: 20px;
   }
 }
+
+:host ::ng-deep .flexContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+:host ::ng-deep  .titleText{
+    font-size: 20pt;
+    padding-top: 1rem;
+}

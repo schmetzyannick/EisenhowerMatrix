@@ -1,16 +1,16 @@
 <div id="appContainer">
   <div class="flexCol">
-    <app-additional-section></app-additional-section>
+    <app-additional-section [title]=titleLeftAddSection></app-additional-section>
   </div>
   <div class="flexCol">
-    <app-matrix-section id="now"></app-matrix-section>
-    <app-matrix-section id="delegate"></app-matrix-section>
+    <app-matrix-section id="now" [title]=titleDelegateCard></app-matrix-section>
+    <app-matrix-section id="delegate" [title]=titleDelegateCard></app-matrix-section>
   </div>
   <div class="flexCol">
-    <app-matrix-section id="own"></app-matrix-section>
-    <app-matrix-section id="trash"></app-matrix-section>
+    <app-matrix-section id="own" [title]=titleOwnCard></app-matrix-section>
+    <app-matrix-section id="trash" [title]=titleTrashCard></app-matrix-section>
   </div>
   <div class="flexCol">
-    <app-additional-section></app-additional-section>
+    <app-additional-section [title]=titleRigthAddSection></app-additional-section>
   </div>
 </div>
