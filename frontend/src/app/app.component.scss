@@ -1,0 +1,13 @@
+#appContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #205159;
+  height: 100vh;
+  width: 100vw;
+
+  .flexCol {
+    flex-grow: 1;
+    padding: 20px;
+  }
+}
