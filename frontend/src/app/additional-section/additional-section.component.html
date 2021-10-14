@@ -1,8 +1,11 @@
 <mat-card class="additionalSection">
-    <div class="flexContainer">
-        <p class="flexItem titleText">{{title}}</p>
-        <button mat-fab color="primary" class="flexItem">
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
+  <div class="flexContainer">
+    <p class="flexItem titleText">{{ title }}</p>
+    <button mat-fab color="primary" class="flexItem" (click)="addTask()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <form class="taskForm">
+    <app-task *ngFor="let tsak of tasks"></app-task>
+  </form>
 </mat-card>

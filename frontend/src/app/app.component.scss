@@ -3,8 +3,9 @@
   flex-direction: row;
   justify-content: space-around;
   background-color: #205159;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  max-width: 100vw;
+  flex-flow: row wrap;
 
   .flexCol {
     flex-grow: 1;
@@ -22,4 +23,12 @@
 :host ::ng-deep  .titleText{
     font-size: 20pt;
     padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+:host ::ng-deep .taskForm{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: auto;
 }
