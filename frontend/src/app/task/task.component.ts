@@ -6,7 +6,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent implements OnInit {
-  public desc: string;
+  @Input('desc') desc: string;
   @Input('ident') ident: string;
   @Output() deleteInParent: EventEmitter<string> = new EventEmitter();
 

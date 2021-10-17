@@ -23,6 +23,7 @@
           <app-task
             *ngFor="let task of doneSectionTaskList; let i = index"
             [ident]="titleLeftAddSection + 'Task' + i"
+            [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             cdkDrag
           ></app-task>
@@ -63,6 +64,7 @@
           <app-task
             *ngFor="let task of nowSectionTaskList; let i = index"
             [ident]="titleNowCard + 'Task' + i"
+            [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             cdkDrag
           ></app-task>
@@ -100,6 +102,7 @@
           <app-task
             *ngFor="let task of delegateSectionTaskList; let i = index"
             [ident]="titleDelegateCard + 'Task' + i"
+            [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             cdkDrag
           ></app-task>
@@ -140,6 +143,7 @@
           <app-task
             *ngFor="let task of ownSectionTaskList; let i = index"
             [ident]="titleOwnCard + 'Task' + i"
+            [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             cdkDrag
           ></app-task>
@@ -177,6 +181,7 @@
           <app-task
             *ngFor="let task of trashSectionTaskList; let i = index"
             [ident]="titleTrashCard + 'Task' + i"
+            [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             cdkDrag
           ></app-task>
@@ -216,6 +221,7 @@
           <app-task
             *ngFor="let task of backLogSectionTaskList; let i = index"
             [ident]="titleRigthAddSection + 'Task' + i"
+            [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             cdkDrag
           ></app-task>
