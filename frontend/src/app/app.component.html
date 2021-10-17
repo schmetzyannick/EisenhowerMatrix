@@ -5,10 +5,24 @@
         <p class="flexItem titleText">{{ titleLeftAddSection }}</p>
       </div>
       <form class="taskForm">
-        <app-task
-          *ngFor="let task of doneSectionTaskList; let i = index"
-          [ident]="titleLeftAddSection + 'Task' + i"
-        ></app-task>
+        <div
+          cdkDropList
+          #doneSectionTaskDropList="cdkDropList"
+          [cdkDropListData]="doneSectionTaskList"
+          [cdkDropListConnectedTo]="[
+            nowSectionTaskDropList,
+            doneSectionTaskDropList,
+            delegateSectionDropTaskList
+          ]"
+          (cdkDropListDropped)="drop($event)"
+          class="dropSection"
+        >
+          <app-task
+            *ngFor="let task of doneSectionTaskList; let i = index"
+            [ident]="titleLeftAddSection + 'Task' + i"
+            cdkDrag
+          ></app-task>
+        </div>
       </form>
     </div>
   </div>
@@ -27,10 +41,24 @@
         </button>
       </div>
       <form class="taskForm">
-        <app-task
-          *ngFor="let task of nowSectionTaskList; let i = index"
-          [ident]="titleNowCard + 'Task' + i"
-        ></app-task>
+        <div
+          cdkDropList
+          #nowSectionTaskDropList="cdkDropList"
+          [cdkDropListData]="nowSectionTaskList"
+          [cdkDropListConnectedTo]="[
+            nowSectionTaskDropList,
+            doneSectionTaskDropList,
+            delegateSectionDropTaskList
+          ]"
+          (cdkDropListDropped)="drop($event)"
+          class="dropSection"
+        >
+          <app-task
+            *ngFor="let task of nowSectionTaskList; let i = index"
+            [ident]="titleNowCard + 'Task' + i"
+            cdkDrag
+          ></app-task>
+        </div>
       </form>
     </div>
     <div class="matrixCard">
@@ -46,10 +74,24 @@
         </button>
       </div>
       <form class="taskForm">
-        <app-task
-          *ngFor="let task of delegateSectionTaskList; let i = index"
-          [ident]="titleDelegateCard + 'Task' + i"
-        ></app-task>
+        <div
+          cdkDropList
+          #delegateSectionDropTaskList="cdkDropList"
+          [cdkDropListData]="delegateSectionTaskList"
+          [cdkDropListConnectedTo]="[
+            nowSectionTaskDropList,
+            doneSectionTaskDropList,
+            delegateSectionDropTaskList
+          ]"
+          (cdkDropListDropped)="drop($event)"
+          class="dropSection"
+        >
+          <app-task
+            *ngFor="let task of delegateSectionTaskList; let i = index"
+            [ident]="titleDelegateCard + 'Task' + i"
+            cdkDrag
+          ></app-task>
+        </div>
       </form>
     </div>
   </div>
