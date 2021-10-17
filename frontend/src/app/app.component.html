@@ -12,7 +12,10 @@
           [cdkDropListConnectedTo]="[
             nowSectionTaskDropList,
             doneSectionTaskDropList,
-            delegateSectionDropTaskList
+            delegateSectionDropTaskList,
+            ownSectionDropTaskList,
+            trashSectionDropTaskList,
+            backLogSectionDropTaskList
           ]"
           (cdkDropListDropped)="drop($event)"
           class="dropSection"
@@ -20,6 +23,7 @@
           <app-task
             *ngFor="let task of doneSectionTaskList; let i = index"
             [ident]="titleLeftAddSection + 'Task' + i"
+            (deleteInParent)="deleteTask($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -48,7 +52,10 @@
           [cdkDropListConnectedTo]="[
             nowSectionTaskDropList,
             doneSectionTaskDropList,
-            delegateSectionDropTaskList
+            delegateSectionDropTaskList,
+            ownSectionDropTaskList,
+            trashSectionDropTaskList,
+            backLogSectionDropTaskList
           ]"
           (cdkDropListDropped)="drop($event)"
           class="dropSection"
@@ -56,6 +63,7 @@
           <app-task
             *ngFor="let task of nowSectionTaskList; let i = index"
             [ident]="titleNowCard + 'Task' + i"
+            (deleteInParent)="deleteTask($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -81,7 +89,10 @@
           [cdkDropListConnectedTo]="[
             nowSectionTaskDropList,
             doneSectionTaskDropList,
-            delegateSectionDropTaskList
+            delegateSectionDropTaskList,
+            ownSectionDropTaskList,
+            trashSectionDropTaskList,
+            backLogSectionDropTaskList
           ]"
           (cdkDropListDropped)="drop($event)"
           class="dropSection"
@@ -89,6 +100,7 @@
           <app-task
             *ngFor="let task of delegateSectionTaskList; let i = index"
             [ident]="titleDelegateCard + 'Task' + i"
+            (deleteInParent)="deleteTask($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -110,11 +122,28 @@
         </button>
       </div>
       <form class="taskForm">
-        <app-task
-          *ngFor="let task of ownSectionTaskList; let i = index"
-          [ident]="titleOwnCard + 'Task' + i"
-          (deleteInParent)="deleteTask($event)"
-        ></app-task>
+        <div
+          cdkDropList
+          #ownSectionDropTaskList="cdkDropList"
+          [cdkDropListData]="ownSectionTaskList"
+          [cdkDropListConnectedTo]="[
+            nowSectionTaskDropList,
+            doneSectionTaskDropList,
+            delegateSectionDropTaskList,
+            ownSectionDropTaskList,
+            trashSectionDropTaskList,
+            backLogSectionDropTaskList
+          ]"
+          (cdkDropListDropped)="drop($event)"
+          class="dropSection"
+        >
+          <app-task
+            *ngFor="let task of ownSectionTaskList; let i = index"
+            [ident]="titleOwnCard + 'Task' + i"
+            (deleteInParent)="deleteTask($event)"
+            cdkDrag
+          ></app-task>
+        </div>
       </form>
     </div>
     <div class="matrixCard">
@@ -130,10 +159,28 @@
         </button>
       </div>
       <form class="taskForm">
-        <app-task
-          *ngFor="let task of trashSectionTaskList; let i = index"
-          [ident]="titleTrashCard + 'Task' + i"
-        ></app-task>
+        <div
+          cdkDropList
+          #trashSectionDropTaskList="cdkDropList"
+          [cdkDropListData]="trashSectionTaskList"
+          [cdkDropListConnectedTo]="[
+            nowSectionTaskDropList,
+            doneSectionTaskDropList,
+            delegateSectionDropTaskList,
+            ownSectionDropTaskList,
+            trashSectionDropTaskList,
+            backLogSectionDropTaskList
+          ]"
+          (cdkDropListDropped)="drop($event)"
+          class="dropSection"
+        >
+          <app-task
+            *ngFor="let task of trashSectionTaskList; let i = index"
+            [ident]="titleTrashCard + 'Task' + i"
+            (deleteInParent)="deleteTask($event)"
+            cdkDrag
+          ></app-task>
+        </div>
       </form>
     </div>
   </div>
@@ -151,10 +198,28 @@
         </button>
       </div>
       <form class="taskForm">
-        <app-task
-          *ngFor="let task of backLogSectionTaskList; let i = index"
-          [ident]="titleRigthAddSection + 'Task' + i"
-        ></app-task>
+        <div
+          cdkDropList
+          #backLogSectionDropTaskList="cdkDropList"
+          [cdkDropListData]="backLogSectionTaskList"
+          [cdkDropListConnectedTo]="[
+            nowSectionTaskDropList,
+            doneSectionTaskDropList,
+            delegateSectionDropTaskList,
+            ownSectionDropTaskList,
+            trashSectionDropTaskList,
+            backLogSectionDropTaskList
+          ]"
+          (cdkDropListDropped)="drop($event)"
+          class="dropSection"
+        >
+          <app-task
+            *ngFor="let task of backLogSectionTaskList; let i = index"
+            [ident]="titleRigthAddSection + 'Task' + i"
+            (deleteInParent)="deleteTask($event)"
+            cdkDrag
+          ></app-task>
+        </div>
       </form>
     </div>
   </div>
