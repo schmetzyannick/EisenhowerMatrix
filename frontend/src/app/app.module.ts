@@ -6,16 +6,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import {FormsModule } from '@angular/forms'
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatrixSectionComponent } from './matrix-section/matrix-section.component';
-import { AdditionalSectionComponent } from './additional-section/additional-section.component';
 import { TaskComponent } from './task/task.component';
 
 @NgModule({
-  declarations: [AppComponent, MatrixSectionComponent, AdditionalSectionComponent, TaskComponent],
+  declarations: [AppComponent, TaskComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatCardModule,
     MatIconModule,
     MatInputModule,

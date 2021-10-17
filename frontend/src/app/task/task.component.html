@@ -1,10 +1,10 @@
-<div class="flexContainer">
+<div class="flexContainer" (id)=ident>
 <mat-checkbox></mat-checkbox>
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Task</mat-label>
-    <input matInput value="" />
+    <input matInput  ([value])="desc" />
   </mat-form-field>
-  <button mat-fab color="primary" class="flexItem">
+  <button mat-fab color="primary" class="flexItem" (click)="removeTask(); $event.preventDefault()">
     <mat-icon>delete</mat-icon>
   </button>
 </div>
