@@ -1,16 +1,119 @@
 <div id="appContainer">
   <div class="flexCol">
-    <app-additional-section [title]=titleLeftAddSection></app-additional-section>
+    <div class="additionalSection">
+      <div class="flexContainer">
+        <p class="flexItem titleText">{{ titleLeftAddSection }}</p>
+      </div>
+      <form class="taskForm">
+        <app-task
+          *ngFor="let task of doneSectionTaskList; let i = index"
+          [ident]="titleLeftAddSection + 'Task' + i"
+        ></app-task>
+      </form>
+    </div>
+  </div>
+
+  <div class="flexCol">
+    <div class="matrixCard">
+      <div class="flexContainer">
+        <p class="flexItem titleText">{{ titleNowCard }}</p>
+        <button
+          mat-fab
+          color="primary"
+          class="flexItem"
+          (click)="addTask('nowSection')"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <form class="taskForm">
+        <app-task
+          *ngFor="let task of nowSectionTaskList; let i = index"
+          [ident]="titleNowCard + 'Task' + i"
+        ></app-task>
+      </form>
+    </div>
+    <div class="matrixCard">
+      <div class="flexContainer">
+        <p class="flexItem titleText">{{ titleDelegateCard }}</p>
+        <button
+          mat-fab
+          color="primary"
+          class="flexItem"
+          (click)="addTask('delegateSection')"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <form class="taskForm">
+        <app-task
+          *ngFor="let task of delegateSectionTaskList; let i = index"
+          [ident]="titleDelegateCard + 'Task' + i"
+        ></app-task>
+      </form>
+    </div>
+  </div>
+
+  <div class="flexCol">
+    <div class="matrixCard">
+      <div class="flexContainer">
+        <p class="flexItem titleText">{{ titleOwnCard }}</p>
+        <button
+          mat-fab
+          color="primary"
+          class="flexItem"
+          (click)="addTask('ownSection')"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <form class="taskForm">
+        <app-task
+          *ngFor="let task of ownSectionTaskList; let i = index"
+          [ident]="titleOwnCard + 'Task' + i"
+          (deleteInParent)="deleteTask($event)"
+        ></app-task>
+      </form>
+    </div>
+    <div class="matrixCard">
+      <div class="flexContainer">
+        <p class="flexItem titleText">{{ titleTrashCard }}</p>
+        <button
+          mat-fab
+          color="primary"
+          class="flexItem"
+          (click)="addTask('trashSection')"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <form class="taskForm">
+        <app-task
+          *ngFor="let task of trashSectionTaskList; let i = index"
+          [ident]="titleTrashCard + 'Task' + i"
+        ></app-task>
+      </form>
+    </div>
   </div>
   <div class="flexCol">
-    <app-matrix-section id="now" [title]=titleDelegateCard></app-matrix-section>
-    <app-matrix-section id="delegate" [title]=titleDelegateCard></app-matrix-section>
-  </div>
-  <div class="flexCol">
-    <app-matrix-section id="own" [title]=titleOwnCard></app-matrix-section>
-    <app-matrix-section id="trash" [title]=titleTrashCard></app-matrix-section>
-  </div>
-  <div class="flexCol">
-    <app-additional-section [title]=titleRigthAddSection></app-additional-section>
+    <div class="additionalSection">
+      <div class="flexContainer">
+        <p class="flexItem titleText">{{ titleRigthAddSection }}</p>
+        <button
+          mat-fab
+          color="primary"
+          class="flexItem"
+          (click)="addTask('backLogSection')"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <form class="taskForm">
+        <app-task
+          *ngFor="let task of backLogSectionTaskList; let i = index"
+          [ident]="titleRigthAddSection + 'Task' + i"
+        ></app-task>
+      </form>
+    </div>
   </div>
 </div>

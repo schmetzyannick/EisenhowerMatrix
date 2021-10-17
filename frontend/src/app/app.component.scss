@@ -19,16 +19,36 @@
     justify-content: space-between;
 
 }
-
-:host ::ng-deep  .titleText{
+.titleText{
     font-size: 20pt;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
 
-:host ::ng-deep .taskForm{
+.taskForm{
     display: flex;
     flex-direction: column;
     position: relative;
     overflow: auto;
+}
+
+.additionalSection{
+  margin-top: 1rem;
+  height: 92vh;
+  background-color: #ffffffd4;
+  color: black;
+  padding: 1rem;
+}
+.additionalSection > .taskForm{
+  height: 95%;
+}
+
+.matrixCard {
+  margin-top: 1rem;
+  height: 30vh;
+  background-color: #424242b3;
+  padding: 1rem;
+}
+.matrixCard > .taskForm {
+  height: 80%;
 }
