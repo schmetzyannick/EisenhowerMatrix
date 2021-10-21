@@ -9,6 +9,7 @@ export class TaskComponent implements OnInit {
   @Input('desc') desc: string;
   @Input('ident') ident: string;
   @Output() deleteInParent: EventEmitter<string> = new EventEmitter();
+  @Output() changeTaskValue: EventEmitter<[string, string]> = new EventEmitter();
 
   constructor() {
     this.desc = '';
@@ -16,6 +17,10 @@ export class TaskComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  public sendChangeToParent(): void{
+    this.changeTaskValue.emit([this.ident, this.desc]);
+  }
 
   public removeTask(): void{
     this.deleteInParent.emit(this.ident);

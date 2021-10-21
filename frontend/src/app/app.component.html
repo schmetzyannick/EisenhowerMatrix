@@ -25,6 +25,7 @@
             [ident]="titleLeftAddSection + 'Task' + i"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
+            (changeTaskValue)="updateTask($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -66,6 +67,7 @@
             [ident]="titleNowCard + 'Task' + i"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
+            (changeTaskValue)="updateTask($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -104,6 +106,7 @@
             [ident]="titleDelegateCard + 'Task' + i"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
+            (changeTaskValue)="updateTask($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -145,6 +148,7 @@
             [ident]="titleOwnCard + 'Task' + i"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
+            (changeTaskValue)="updateTask($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -183,6 +187,7 @@
             [ident]="titleTrashCard + 'Task' + i"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
+            (changeTaskValue)="updateTask($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -223,6 +228,7 @@
             [ident]="titleRigthAddSection + 'Task' + i"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
+            (changeTaskValue)="updateTask($event)"
             cdkDrag
           ></app-task>
         </div>
