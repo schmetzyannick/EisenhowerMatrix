@@ -1,0 +1,18 @@
+.flexContainer{
+    display: flex;
+    justify-content: space-around;
+}
+
+mat-form-field{
+    position: relative;
+    margin-top: 0.2rem;
+    width: 80%;
+}
+
+mat-checkbox{
+    margin-top: 1rem;
+}
+
+button{
+    margin-top: 0.5rem;
+}
