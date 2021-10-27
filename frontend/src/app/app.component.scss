@@ -30,6 +30,7 @@
     flex-direction: column;
     position: relative;
     overflow: auto;
+    scrollbar-width: thin;
 }
 
 .additionalSection{
@@ -58,4 +59,23 @@
 }
 .addBtn{
   background-color: #ecc31a;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #2D373B; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
