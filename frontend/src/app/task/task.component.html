@@ -1,0 +1,10 @@
+<div class="flexContainer" (id)=ident>
+<mat-checkbox></mat-checkbox>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Task</mat-label>
+    <input matInput [(ngModel)]="desc" (change)="sendChangeToParent();" />
+  </mat-form-field>
+  <button mat-mini-fab class="flexItem" (click)="removeTask(); $event.preventDefault()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
