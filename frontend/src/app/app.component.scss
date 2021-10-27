@@ -10,15 +10,17 @@
   .flexCol {
     flex-grow: 1;
     padding: 20px;
+    width: 20vw;
   }
 }
 
-:host ::ng-deep .flexContainer{
+.flexContainer{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
+    overflow-x: hidden;
 }
+
 .titleText{
     font-size: 20pt;
     padding-top: 1rem;
