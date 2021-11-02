@@ -25,8 +25,10 @@
             [listName]="doneSection.sectionTitle"
             [ident]="task[0]"
             [desc]="task[1]"
+            [doneState]="task[2]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
+            (checkBoxClicked)="taskCheckBoxClicked($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -67,8 +69,10 @@
             [listName]="nowSection.sectionTitle"
             [ident]="task[0]"
             [desc]="task[1]"
+            [doneState]="task[2]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
+            (checkBoxClicked)="taskCheckBoxClicked($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -106,8 +110,10 @@
             [listName]="delegateSection.sectionTitle"
             [ident]="task[0]"
             [desc]="task[1]"
+            [doneState]="task[2]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
+            (checkBoxClicked)="taskCheckBoxClicked($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -148,8 +154,10 @@
             [listName]="ownSection.sectionTitle"
             [ident]="task[0]"
             [desc]="task[1]"
+            [doneState]="task[2]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
+            (checkBoxClicked)="taskCheckBoxClicked($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -187,8 +195,10 @@
             [listName]="trashSection.sectionTitle"
             [ident]="task[0]"
             [desc]="task[1]"
+            [doneState]="task[2]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
+            (checkBoxClicked)="taskCheckBoxClicked($event)"
             cdkDrag
           ></app-task>
         </div>
@@ -228,8 +238,10 @@
             [listName]="backLogSection.sectionTitle"
             [ident]="task[0]"
             [desc]="task[1]"
+            [doneState]="task[2]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
+            (checkBoxClicked)="taskCheckBoxClicked($event)"
             cdkDrag
           ></app-task>
         </div>

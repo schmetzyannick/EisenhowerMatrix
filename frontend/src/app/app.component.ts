@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  CdkDragDrop,
-  moveItemInArray
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TaskSection } from 'src/utils/TaskSection';
 @Component({
   selector: 'app-root',
@@ -36,10 +33,13 @@ export class AppComponent {
     this.listRefs.push(this.trashSection);
   }
   public addTask(listName: string): void {
-    const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === listName);
+    const section = this.listRefs.find(
+      (taskSection) => taskSection.sectionTitle === listName
+    );
     section?.taskList.push([
       'Task' + this.taskCounter,
       'Task' + this.taskCounter,
+      false
     ]);
     this.taskCounter++;
   }
@@ -47,23 +47,30 @@ export class AppComponent {
   public deleteTask(params: [string, string]): void {
     const listName = params[0];
     const ident = params[1];
-    const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === listName);
-    section?.taskList.splice(section.taskList.findIndex((task) => task[0] === ident), 1);
+    const section = this.listRefs.find(
+      (taskSection) => taskSection.sectionTitle === listName
+    );
+    section?.taskList.splice(
+      section.taskList.findIndex((task) => task[0] === ident),
+      1
+    );
   }
 
   public updateTask(params: [string, string, string]): void {
     const listName = params[0];
     const ident = params[1];
-    const desc = params[2]
-    const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === listName);
-    if(section !== undefined){
+    const desc = params[2];
+    const section = this.listRefs.find(
+      (taskSection) => taskSection.sectionTitle === listName
+    );
+    if (section !== undefined) {
       section.taskList[
         section.taskList.findIndex((task) => task[0] === ident)
       ][1] = desc;
     }
   }
 
-  public drop(event: CdkDragDrop<[string, string][]>) {
+  public drop(event: CdkDragDrop<[string, string, boolean][]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -80,9 +87,37 @@ export class AppComponent {
       const titleContainer = container.firstChild;
       const title = (titleContainer?.firstChild as HTMLParagraphElement)
         .textContent;
-      const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === title);
-      if(section !== undefined){
+      const section = this.listRefs.find(
+        (taskSection) => taskSection.sectionTitle === title
+      );
+      if (section !== undefined) {
         section.taskList.splice(event.currentIndex, 0, itemToMove);
+      }
+    }
+  }
+
+  public taskCheckBoxClicked(params: [string, string, boolean]): void {
+    const listName = params[0];
+    const ident = params[1];
+    const checked = params[2];
+    if (!checked && listName === this.doneSection.sectionTitle) {
+      const removedItems = this.doneSection.taskList.splice(
+        this.doneSection.taskList.findIndex((task) => task[0] === ident),
+        1
+      );
+      removedItems[0][2]=checked;
+      this.backLogSection.taskList.splice(0, 0, removedItems[0]);
+    } else if (checked && listName !== this.doneSection.sectionTitle) {
+      const section = this.listRefs.find(
+        (taskSection) => taskSection.sectionTitle === listName
+      );
+      if (section !== undefined) {
+        const itemsToMove = section.taskList.splice(
+          section.taskList.findIndex((task) => task[0] === ident),
+          1
+        );
+        itemsToMove[0][2] = checked;
+        this.doneSection.taskList.splice(0, 0, itemsToMove[0]);
       }
     }
   }
