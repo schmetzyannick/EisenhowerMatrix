@@ -10,14 +10,14 @@ export class TaskSection {
    * Tasks list of the section with following pairs:
    * [TaskId, Text]
    */
-  public taskList: Array<[string, string]>;
+  public taskList: Array<[string, string, boolean]>;
 
   /**
    * @param title Section title.
    * @param list Task list.
    * @param counter Task counter.
    */
-  constructor(title: string, list: Array<[string, string]> = [], counter: number = 0) {
+  constructor(title: string, list: Array<[string, string, boolean]> = [], counter: number = 0) {
     this.sectionTitle = title;
     this.taskList = list;
   }
