@@ -2,27 +2,28 @@
   <div class="flexCol">
     <div class="additionalSection">
       <div class="flexContainer">
-        <p class="flexItem titleText">{{ titleLeftAddSection }}</p>
+        <p class="flexItem titleText">{{ doneSection.sectionTitle }}</p>
       </div>
       <form class="taskForm">
         <div
           cdkDropList
-          #doneSectionTaskDropList="cdkDropList"
-          [cdkDropListData]="doneSectionTaskList"
+          #doneSectionDropList="cdkDropList"
+          [cdkDropListData]="doneSection.taskList"
           [cdkDropListConnectedTo]="[
-            nowSectionTaskDropList,
-            doneSectionTaskDropList,
-            delegateSectionDropTaskList,
-            ownSectionDropTaskList,
-            trashSectionDropTaskList,
-            backLogSectionDropTaskList
+            doneSectionDropList,
+            backLogSectionDropList,
+            nowSectionDropList,
+            ownSectionDropList,
+            delegateSectionDropList,
+            trashSectionDropList
           ]"
           (cdkDropListDropped)="drop($event)"
           class="dropSection"
         >
           <app-task
-            *ngFor="let task of doneSectionTaskList; let i = index"
-            [ident]="titleLeftAddSection + 'Task' + i"
+            *ngFor="let task of doneSection.taskList"
+            [listName]="doneSection.sectionTitle"
+            [ident]="task[0]"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
@@ -36,11 +37,11 @@
   <div class="flexCol">
     <div class="matrixCard">
       <div class="flexContainer">
-        <p class="flexItem titleText">{{ titleNowCard }}</p>
+        <p class="flexItem titleText">{{ nowSection.sectionTitle }}</p>
         <button
           mat-mini-fab
           class="flexItem addBtn"
-          (click)="addTask('nowSection')"
+          (click)="addTask(nowSection.sectionTitle)"
         >
           <mat-icon>add</mat-icon>
         </button>
@@ -48,22 +49,23 @@
       <form class="taskForm">
         <div
           cdkDropList
-          #nowSectionTaskDropList="cdkDropList"
-          [cdkDropListData]="nowSectionTaskList"
+          #nowSectionDropList="cdkDropList"
+          [cdkDropListData]="nowSection.taskList"
           [cdkDropListConnectedTo]="[
-            nowSectionTaskDropList,
-            doneSectionTaskDropList,
-            delegateSectionDropTaskList,
-            ownSectionDropTaskList,
-            trashSectionDropTaskList,
-            backLogSectionDropTaskList
+            doneSectionDropList,
+            backLogSectionDropList,
+            nowSectionDropList,
+            ownSectionDropList,
+            delegateSectionDropList,
+            trashSectionDropList
           ]"
           (cdkDropListDropped)="drop($event)"
           class="dropSection"
         >
           <app-task
-            *ngFor="let task of nowSectionTaskList; let i = index"
-            [ident]="titleNowCard + 'Task' + i"
+            *ngFor="let task of nowSection.taskList"
+            [listName]="nowSection.sectionTitle"
+            [ident]="task[0]"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
@@ -74,11 +76,11 @@
     </div>
     <div class="matrixCard">
       <div class="flexContainer">
-        <p class="flexItem titleText">{{ titleDelegateCard }}</p>
+        <p class="flexItem titleText">{{ delegateSection.sectionTitle }}</p>
         <button
           mat-mini-fab
           class="flexItem addBtn"
-          (click)="addTask('delegateSection')"
+          (click)="addTask(delegateSection.sectionTitle)"
         >
           <mat-icon>add</mat-icon>
         </button>
@@ -86,22 +88,23 @@
       <form class="taskForm">
         <div
           cdkDropList
-          #delegateSectionDropTaskList="cdkDropList"
-          [cdkDropListData]="delegateSectionTaskList"
+          #delegateSectionDropList="cdkDropList"
+          [cdkDropListData]="delegateSection.taskList"
           [cdkDropListConnectedTo]="[
-            nowSectionTaskDropList,
-            doneSectionTaskDropList,
-            delegateSectionDropTaskList,
-            ownSectionDropTaskList,
-            trashSectionDropTaskList,
-            backLogSectionDropTaskList
+            doneSectionDropList,
+            backLogSectionDropList,
+            nowSectionDropList,
+            ownSectionDropList,
+            delegateSectionDropList,
+            trashSectionDropList
           ]"
           (cdkDropListDropped)="drop($event)"
           class="dropSection"
         >
           <app-task
-            *ngFor="let task of delegateSectionTaskList; let i = index"
-            [ident]="titleDelegateCard + 'Task' + i"
+            *ngFor="let task of delegateSection.taskList"
+            [listName]="delegateSection.sectionTitle"
+            [ident]="task[0]"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
@@ -115,11 +118,11 @@
   <div class="flexCol">
     <div class="matrixCard">
       <div class="flexContainer">
-        <p class="flexItem titleText">{{ titleOwnCard }}</p>
+        <p class="flexItem titleText">{{ ownSection.sectionTitle }}</p>
         <button
           mat-mini-fab
           class="flexItem addBtn"
-          (click)="addTask('ownSection')"
+          (click)="addTask(ownSection.sectionTitle)"
         >
           <mat-icon>add</mat-icon>
         </button>
@@ -127,22 +130,23 @@
       <form class="taskForm">
         <div
           cdkDropList
-          #ownSectionDropTaskList="cdkDropList"
-          [cdkDropListData]="ownSectionTaskList"
+          #ownSectionDropList="cdkDropList"
+          [cdkDropListData]="ownSection.taskList"
           [cdkDropListConnectedTo]="[
-            nowSectionTaskDropList,
-            doneSectionTaskDropList,
-            delegateSectionDropTaskList,
-            ownSectionDropTaskList,
-            trashSectionDropTaskList,
-            backLogSectionDropTaskList
+            doneSectionDropList,
+            backLogSectionDropList,
+            nowSectionDropList,
+            ownSectionDropList,
+            delegateSectionDropList,
+            trashSectionDropList
           ]"
           (cdkDropListDropped)="drop($event)"
           class="dropSection"
         >
           <app-task
-            *ngFor="let task of ownSectionTaskList; let i = index"
-            [ident]="titleOwnCard + 'Task' + i"
+            *ngFor="let task of ownSection.taskList"
+            [listName]="ownSection.sectionTitle"
+            [ident]="task[0]"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
@@ -153,11 +157,11 @@
     </div>
     <div class="matrixCard">
       <div class="flexContainer">
-        <p class="flexItem titleText">{{ titleTrashCard }}</p>
+        <p class="flexItem titleText">{{ trashSection.sectionTitle }}</p>
         <button
           mat-mini-fab
           class="flexItem addBtn"
-          (click)="addTask('trashSection')"
+          (click)="addTask(trashSection.sectionTitle)"
         >
           <mat-icon>add</mat-icon>
         </button>
@@ -165,22 +169,23 @@
       <form class="taskForm">
         <div
           cdkDropList
-          #trashSectionDropTaskList="cdkDropList"
-          [cdkDropListData]="trashSectionTaskList"
+          #trashSectionDropList="cdkDropList"
+          [cdkDropListData]="trashSection.taskList"
           [cdkDropListConnectedTo]="[
-            nowSectionTaskDropList,
-            doneSectionTaskDropList,
-            delegateSectionDropTaskList,
-            ownSectionDropTaskList,
-            trashSectionDropTaskList,
-            backLogSectionDropTaskList
+            doneSectionDropList,
+            backLogSectionDropList,
+            nowSectionDropList,
+            ownSectionDropList,
+            delegateSectionDropList,
+            trashSectionDropList
           ]"
           (cdkDropListDropped)="drop($event)"
           class="dropSection"
         >
           <app-task
-            *ngFor="let task of trashSectionTaskList; let i = index"
-            [ident]="titleTrashCard + 'Task' + i"
+            *ngFor="let task of  trashSection.taskList"
+            [listName]="trashSection.sectionTitle"
+            [ident]="task[0]"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
@@ -193,11 +198,11 @@
   <div class="flexCol">
     <div class="additionalSection">
       <div class="flexContainer">
-        <p class="flexItem titleText">{{ titleRigthAddSection }}</p>
+        <p class="flexItem titleText">{{ backLogSection.sectionTitle }}</p>
         <button
           mat-mini-fab
           class="flexItem addBtn"
-          (click)="addTask('backLogSection')"
+          (click)="addTask(backLogSection.sectionTitle)"
         >
           <mat-icon>add</mat-icon>
         </button>
@@ -205,22 +210,23 @@
       <form class="taskForm">
         <div
           cdkDropList
-          #backLogSectionDropTaskList="cdkDropList"
-          [cdkDropListData]="backLogSectionTaskList"
+          #backLogSectionDropList="cdkDropList"
+          [cdkDropListData]="backLogSection.taskList"
           [cdkDropListConnectedTo]="[
-            nowSectionTaskDropList,
-            doneSectionTaskDropList,
-            delegateSectionDropTaskList,
-            ownSectionDropTaskList,
-            trashSectionDropTaskList,
-            backLogSectionDropTaskList
+            doneSectionDropList,
+            backLogSectionDropList,
+            nowSectionDropList,
+            ownSectionDropList,
+            delegateSectionDropList,
+            trashSectionDropList
           ]"
           (cdkDropListDropped)="drop($event)"
           class="dropSection"
         >
           <app-task
-            *ngFor="let task of backLogSectionTaskList; let i = index"
-            [ident]="titleRigthAddSection + 'Task' + i"
+            *ngFor="let task of backLogSection.taskList"
+            [listName]="backLogSection.sectionTitle"
+            [ident]="task[0]"
             [desc]="task[1]"
             (deleteInParent)="deleteTask($event)"
             (changeTaskValue)="updateTask($event)"
