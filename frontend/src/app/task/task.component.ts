@@ -8,21 +8,23 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class TaskComponent implements OnInit {
   @Input('desc') desc: string;
   @Input('ident') ident: string;
-  @Output() deleteInParent: EventEmitter<string> = new EventEmitter();
-  @Output() changeTaskValue: EventEmitter<[string, string]> = new EventEmitter();
+  @Input('listName') listName: string;
+  @Output() deleteInParent: EventEmitter<[string, string]> = new EventEmitter();
+  @Output() changeTaskValue: EventEmitter<[string, string, string]> = new EventEmitter();
 
   constructor() {
     this.desc = '';
     this.ident = '';
+    this.listName = '';
   }
 
   ngOnInit(): void {}
 
   public sendChangeToParent(): void{
-    this.changeTaskValue.emit([this.ident, this.desc]);
+    this.changeTaskValue.emit([this.listName, this.ident, this.desc]);
   }
 
   public removeTask(): void{
-    this.deleteInParent.emit(this.ident);
+    this.deleteInParent.emit([this.listName, this.ident]);
   }
 }
