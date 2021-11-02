@@ -1,7 +1,7 @@
 /**
  * Holds infomation about a task list.
  */
-export class TaskList {
+export class TaskSection {
     /**
      * Corresponding list section title.
      */
@@ -13,12 +13,6 @@ export class TaskList {
   public taskList: Array<[string, string]>;
 
   /**
-   * Task counter. Needs to be counted for every section to
-   * set task ident with section title.
-   */
-  public taskCounter: number;
-
-  /**
    * @param title Section title.
    * @param list Task list.
    * @param counter Task counter.
@@ -26,6 +20,5 @@ export class TaskList {
   constructor(title: string, list: Array<[string, string]> = [], counter: number = 0) {
     this.sectionTitle = title;
     this.taskList = list;
-    this.taskCounter = counter;
   }
 }
