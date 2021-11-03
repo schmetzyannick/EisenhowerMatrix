@@ -1,18 +1,18 @@
-.flexContainer{
-    display: flex;
-    justify-content: space-around;
-}
+.taskContainer {
+  display: flex;
+  align-items: center;
 
-mat-form-field{
+  mat-checkbox{
+    margin-right: 1rem;
+  }
+
+  mat-form-field{
     position: relative;
-    margin-top: 0.2rem;
-    width: 80%;
-}
+    width: 100%;
 
-mat-checkbox{
-    margin-top: 1rem;
-}
+    ::ng-deep .mat-form-field-wrapper {
+      margin-bottom: -1.25em;
+    }
+  }
 
-button{
-    margin-top: 0.5rem;
 }
