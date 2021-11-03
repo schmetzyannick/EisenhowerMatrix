@@ -1,14 +1,19 @@
+@import "src/utils/variables";
+
+$checkbox-width: 16px;
+
 .taskContainer {
-  display: flex;
-  align-items: center;
+  margin-bottom: $spacing;
 
   mat-checkbox{
-    margin-right: 1rem;
+    display: inline-block;
+    width: $checkbox-width;
+    transform: translateY(-7px);
+    margin-right: $spacing;
   }
 
   mat-form-field{
-    position: relative;
-    width: 100%;
+    width: calc(100% - #{$checkbox-width} - #{$spacing});
 
     ::ng-deep .mat-form-field-wrapper {
       margin-bottom: -1.25em;

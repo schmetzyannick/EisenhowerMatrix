@@ -1,11 +1,12 @@
-$spacing: 1rem;
+@import "src/utils/variables";
+
 $cards: now, delegate, own, trash;
 $sides: done, backlog;
 
 // Colors
 $button: #ecc31a;
 $cardBackground: rgba(66, 66, 66, 0.8);
-$sideBackground: rgba(255, 255, 255, 0.6);
+$sideBackground: rgba(255, 255, 255, 0.5);
 $cardText: rgb(255, 255, 255);
 $sideText: rgb(66, 66, 66);
 
@@ -17,9 +18,33 @@ $sideText: rgb(66, 66, 66);
   box-sizing: border-box;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
-  grid-template-areas: "done now own backlog"
-                       "done delegate trash backlog";
+  grid-template-areas:
+    "done now own backlog"
+    "done delegate trash backlog";
   grid-gap: $spacing;
+
+  @media (max-width: 800px) {
+    height: 200%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    grid-template-areas:
+      "now own"
+      "delegate trash"
+      "backlog backlog"
+      "done done";
+  }
+
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+    grid-template-areas:
+      "now"
+      "own"
+      "delegate"
+      "trash"
+      "backlog"
+      "done";
+  }
 
   .card {
     padding: $spacing;
