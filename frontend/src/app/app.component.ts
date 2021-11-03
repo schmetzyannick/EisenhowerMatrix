@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TaskSection } from 'src/utils/TaskSection';
+import { TaskPersistenceUtils } from 'src/utils/TaskPersistenceUtils';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -31,7 +32,19 @@ export class AppComponent {
     this.listRefs.push(this.delegateSection);
     this.trashSection = new TaskSection('Trash');
     this.listRefs.push(this.trashSection);
+    this.loadAllTasks();
   }
+
+
+  @HostListener('window:beforeunload', ['$event'])
+  public beforeunloadHandler(event: BeforeUnloadEvent): void {
+    TaskPersistenceUtils.saveTaskSections(this.listRefs);
+  }
+
+  private loadAllTasks(): void {
+    this.listRefs = TaskPersistenceUtils.loadAllTaskSections(this.listRefs);
+  }
+
   public addTask(listName: string): void {
     const section = this.listRefs.find(
       (taskSection) => taskSection.sectionTitle === listName
