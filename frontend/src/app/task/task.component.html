@@ -1,5 +1,5 @@
 <div class="flexContainer" (id)=ident (listName)=listName>
-<mat-checkbox (change)="checkboxHandler($event.checked)" ([checked])="doneState"></mat-checkbox>
+<mat-checkbox (change)="checkboxHandler($event.checked)" [checked]="doneState"></mat-checkbox>
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Task</mat-label>
     <input matInput [(ngModel)]="desc" (change)="sendChangeToParent();" />
