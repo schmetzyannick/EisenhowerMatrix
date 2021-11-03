@@ -2,6 +2,13 @@ $spacing: 1rem;
 $cards: now, delegate, own, trash;
 $sides: done, backlog;
 
+// Colors
+$button: #ecc31a;
+$cardBackground: rgba(66, 66, 66, 0.8);
+$sideBackground: rgba(255, 255, 255, 0.6);
+$cardText: rgb(255, 255, 255);
+$sideText: rgb(66, 66, 66);
+
 #appContainer {
   display: grid;
   width: 100%;
@@ -20,7 +27,8 @@ $sides: done, backlog;
     flex-direction: column;
 
     &.matrix {
-      background: #424242b3;
+      color: $cardText;
+      background: $cardBackground;
 
       @each $card in $cards {
         &##{$card} {
@@ -30,7 +38,8 @@ $sides: done, backlog;
     }
 
     &.side {
-      background-color: #ffffffd4;
+      color: $sideText;
+      background-color: $sideBackground;
 
       @each $side in $sides {
         &##{$side} {
@@ -43,6 +52,8 @@ $sides: done, backlog;
       display: flex;
       flex-grow: 0;
       justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: $spacing;
 
       h2 {
         margin: 0;
@@ -51,7 +62,7 @@ $sides: done, backlog;
       }
 
       button {
-        background-color: #ecc31a;
+        background-color: $button;
       }
     }
 
