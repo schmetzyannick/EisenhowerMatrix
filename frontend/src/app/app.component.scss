@@ -3,13 +3,6 @@
 $cards: now, delegate, own, trash;
 $sides: done, backlog;
 
-// Colors
-$button: #ecc31a;
-$cardBackground: rgba(66, 66, 66, 0.8);
-$sideBackground: rgba(255, 255, 255, 0.5);
-$cardText: rgb(255, 255, 255);
-$sideText: rgb(66, 66, 66);
-
 #appContainer {
   display: grid;
   width: 100%;
@@ -47,7 +40,7 @@ $sideText: rgb(66, 66, 66);
   }
 
   .card {
-    padding: $spacing;
+    padding: $spacing $spacing 0;
     display: flex;
     flex-direction: column;
 
@@ -93,10 +86,15 @@ $sideText: rgb(66, 66, 66);
 
     .taskForm {
       flex-grow: 1;
+      height: 100%;
       overflow-y: auto;
+      scrollbar-width: thin;
+      margin-right: -$spacing;
 
       .dropSection {
         height: 100%;
+        padding-right: $spacing;
+        min-height: 100%;
       }
     }
   }
