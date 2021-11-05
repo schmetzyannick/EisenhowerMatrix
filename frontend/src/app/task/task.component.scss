@@ -3,7 +3,7 @@
 $checkbox-width: 16px;
 
 .taskContainer {
-  margin-bottom: $spacing;
+  padding-bottom: $spacing;
 
   mat-checkbox{
     display: inline-block;
@@ -19,5 +19,4 @@ $checkbox-width: 16px;
       margin-bottom: -1.25em;
     }
   }
-
 }
