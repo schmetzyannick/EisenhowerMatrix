@@ -84,7 +84,6 @@ export class AppComponent {
   }
 
   public drop(event: CdkDragDrop<[string, string, boolean][]>) {
-    console.log(event)
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
