@@ -1,0 +1,10 @@
+{
+    "tabWidth": 4,
+    "useTabs": false,
+    "endOfLine": "auto",
+    "trailingComma": "all",
+    "bracketSpacing": false,
+    "parser": "typescript",
+    "printWidth": 120
+  }
+  
