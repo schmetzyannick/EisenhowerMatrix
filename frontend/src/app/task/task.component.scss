@@ -1,18 +1,22 @@
-.flexContainer{
-    display: flex;
-    justify-content: space-around;
-}
+@import "src/utils/variables";
 
-mat-form-field{
-    position: relative;
-    margin-top: 0.2rem;
-    width: 80%;
-}
+$checkbox-width: 16px;
 
-mat-checkbox{
-    margin-top: 1rem;
-}
+.taskContainer {
+  padding-bottom: $spacing;
 
-button{
-    margin-top: 0.5rem;
+  mat-checkbox{
+    display: inline-block;
+    width: $checkbox-width;
+    transform: translateY(-7px);
+    margin-right: $spacing;
+  }
+
+  mat-form-field{
+    width: calc(100% - #{$checkbox-width} - #{$spacing});
+
+    ::ng-deep .mat-form-field-wrapper {
+      margin-bottom: -1.25em;
+    }
+  }
 }

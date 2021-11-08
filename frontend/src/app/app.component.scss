@@ -1,83 +1,100 @@
+@import "src/utils/variables";
+
+$cards: now, delegate, own, trash;
+$sides: done, backlog;
+
 #appContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  background-color: #205159;
-  min-height: 100vh;
-  max-width: 100vw;
-  flex-flow: row wrap;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  padding: $spacing;
+  box-sizing: border-box;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "done now own backlog"
+    "done delegate trash backlog";
+  grid-gap: $spacing;
 
-  .flexCol {
-    flex-grow: 1;
-    padding: 20px;
-    width: 20vw;
+  @media (max-width: 800px) {
+    height: 200%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    grid-template-areas:
+      "now own"
+      "delegate trash"
+      "backlog backlog"
+      "done done";
   }
-}
 
-.flexContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    overflow-x: hidden;
-}
+  @media (max-width: 800px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+    grid-template-areas:
+      "now"
+      "own"
+      "delegate"
+      "trash"
+      "backlog"
+      "done";
+  }
 
-.titleText{
-    font-size: 20pt;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.taskForm{
+  .card {
+    padding: $spacing $spacing 0;
     display: flex;
     flex-direction: column;
-    position: relative;
-    overflow: auto;
-    scrollbar-width: thin;
-}
 
-.additionalSection{
-  margin-top: 1rem;
-  height: 92vh;
-  background-color: #ffffffd4;
-  color: black;
-  padding: 1rem;
-}
-.additionalSection > .taskForm{
-  height: 95%;
-}
+    &.matrix {
+      color: $cardText;
+      background: $cardBackground;
 
-.matrixCard {
-  margin-top: 1rem;
-  height: 30vh;
-  background-color: #424242b3;
-  padding: 1rem;
-}
-.matrixCard > .taskForm {
-  height: 80%;
-}
-.dropSection{
-  position: relative;
-  height: 100%;
-}
-.addBtn{
-  background-color: #ecc31a;
-}
+      @each $card in $cards {
+        &##{$card} {
+          grid-area: #{$card};
+        }
+      }
+    }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
+    &.side {
+      color: $sideText;
+      background-color: $sideBackground;
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #2D373B; 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888; 
-}
+      @each $side in $sides {
+        &##{$side} {
+          grid-area: #{$side};
+        }
+      }
+    }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+    .titleContainer {
+      display: flex;
+      flex-grow: 0;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: $spacing;
+
+      h2 {
+        margin: 0;
+        font-weight: normal;
+        font-size: 1.7rem;
+      }
+
+      button {
+        background-color: $button;
+      }
+    }
+
+    .taskForm {
+      flex-grow: 1;
+      height: 100%;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      margin-right: -$spacing;
+
+      .dropSection {
+        padding-right: $spacing;
+        min-height: 100%;
+      }
+    }
+  }
 }
