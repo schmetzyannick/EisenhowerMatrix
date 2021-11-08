@@ -1,0 +1,40 @@
+{
+  "name": "eisenhowermatrix",
+  "version": "0.1.0",
+  "description": "Eisenhower matrix to organize your daily tasks",
+  "main": "index.js",
+  "scripts": {
+    "serve": "npm run build:prod && npm run build:frontend && node ./dist/backend/index.js",
+    "build:prod": "webpack --env production",
+    "build:frontend": "cd frontend && ng build && cd ..",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schmetzyannick/EisenhowerMatrix.git"
+  },
+  "keywords": [
+    "eisenhower",
+    "matrix",
+    "eisenhower",
+    "matrix"
+  ],
+  "author": "Yannick Schmetz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/schmetzyannick/EisenhowerMatrix/issues"
+  },
+  "homepage": "https://github.com/schmetzyannick/EisenhowerMatrix#readme",
+  "dependencies": {
+    "expess": "0.0.1-security",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.4",
+    "webpack": "^5.62.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
