@@ -1,5 +1,6 @@
 import express, {Express} from "express";
 import path from "path";
+import { EnvironementUtils } from "./utils/EnvironementUtils";
 
 export class Server {
     public static startServer(): void {
@@ -20,6 +21,7 @@ export class Server {
     constructor(port: number) {
         this.port = port;
         this.app = express();
+        const env = EnvironementUtils.getInstance();
         this.app.use(express.static(path.join(__dirname, "../frontend")));
     }
 

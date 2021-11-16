@@ -1,4 +1,5 @@
 const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const webpackConfig = {
     mode: "development",
@@ -25,5 +26,12 @@ const webpackConfig = {
             },
         ],
     },
+    plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: path.join(__dirname, "backend", "env.json"), to: path.join(__dirname, "dist", "backend", "env.json")},
+      ],
+    }),
+  ],
 };
 module.exports = webpackConfig;
