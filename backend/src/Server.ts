@@ -1,15 +1,31 @@
 import express, {Express} from "express";
 import path from "path";
-import { EnvironementUtils } from "./utils/EnvironementUtils";
+import {Database} from "./database/Database";
+import {Logger} from "./utils/Logger";
 
 export class Server {
     public static startServer(): void {
         if (this.instance === undefined) {
             Server.instance = new Server(4200);
             Server.instance.registerRoutes();
-            Server.instance.app.listen(Server.instance.port, () => {
-                console.log(`Server listening on port: ${Server.instance.port}`);
-            });
+            const db = Database.getInstance();
+            db.dbInstance
+                .authenticate()
+                .then(() => {
+                    db.dbInstance
+                        .sync({force: false, alter: true})
+                        .then(() => {
+                            Server.instance.app.listen(Server.instance.port, () => {
+                                Logger.getLogger().info(`Server listening on port: ${Server.instance.port}`);
+                            });
+                        })
+                        .catch((err) => {
+                            Logger.getLogger().error("Could not start server:", err);
+                        });
+                })
+                .catch((err) => {
+                    Logger.getLogger().error("Could not start server:", err);
+                });
         }
     }
 
@@ -21,7 +37,6 @@ export class Server {
     constructor(port: number) {
         this.port = port;
         this.app = express();
-        const env = EnvironementUtils.getInstance();
         this.app.use(express.static(path.join(__dirname, "../frontend")));
     }
 
