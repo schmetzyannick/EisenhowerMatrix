@@ -3,7 +3,7 @@
   <mat-form-field appearance="fill">
     <mat-label>Task</mat-label>
     <input matInput [(ngModel)]="desc" (change)="sendChangeToParent();" />
-    <button matSuffix mat-icon-button (click)="removeTask(); $event.preventDefault()">
+    <button type="button" matSuffix mat-icon-button (click)="removeTask(); $event.preventDefault()">
       <mat-icon>delete</mat-icon>
     </button>
   </mat-form-field>
