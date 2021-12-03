@@ -7,7 +7,7 @@
     "serve": "npm run build && node ./dist/backend/index.js",
     "build": "npm run build:backend && npm run build:frontend",
     "build:backend": "webpack --env production",
-    "build:frontend": "cd frontend && npm install && ng build && cd ..",
+    "build:frontend": "cd frontend && npm install && .\\node_modules\\.bin\\ng build && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
