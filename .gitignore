@@ -105,3 +105,5 @@ dist
 
 #WebStorm
 .idea/
+
+frontend/.angular/cache/
