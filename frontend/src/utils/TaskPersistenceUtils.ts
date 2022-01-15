@@ -8,14 +8,20 @@ export class TaskPersistenceUtils{
         });
     }
 
-    public static loadAllTaskSections(sections: TaskSection[]): TaskSection[]{
+    public static loadAllTaskSections(sections: TaskSection[]): {listRefs: TaskSection[], counter: number}{
         // load sections from local storage
+        let counter = 1;
         sections.forEach((section: TaskSection) => {
             const loadedSection = JSON.parse(localStorage.getItem(section.sectionTitle) as string);
             if(loadedSection){
                 section.taskList = loadedSection.taskList;
+                // set task id to counter
+                section.taskList.forEach((task) => {
+                    task[0] = 'Task' + counter;
+                    counter++;
+                });
             }
         });
-        return sections
+        return {listRefs: sections, counter: 0};
     }
 }
