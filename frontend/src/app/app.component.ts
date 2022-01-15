@@ -42,7 +42,9 @@ export class AppComponent {
   }
 
   private loadAllTasks(): void {
-    this.listRefs = TaskPersistenceUtils.loadAllTaskSections(this.listRefs);
+    const res = TaskPersistenceUtils.loadAllTaskSections(this.listRefs);
+    this.listRefs = res.listRefs;
+    this.taskCounter = res.counter;
   }
 
   public addTask(listName: string): void {
