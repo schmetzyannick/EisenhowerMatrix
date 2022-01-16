@@ -22,6 +22,6 @@ export class TaskPersistenceUtils{
                 });
             }
         });
-        return {listRefs: sections, counter: 0};
+        return {listRefs: sections, counter: counter};
     }
 }
