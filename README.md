@@ -4,9 +4,9 @@ This project was created, because i could not find any Eisenhower Matrix that pe
 I am plannig to add multi user functionallity to this application, so I can provide it as a Service. (Let's see when I am getting time for this :D)
 
 The project is not just an Einsenhower Matrix, becaus I have added a Done and Backlog column. The Idea behind this columns is: 
-    * Collect new tasks while you are working in the backlog column
-    * At the beginng of your workday, move the tasks from the backlog column, to Now, Self,...
-    * If you have a daily (Scrum) or something simular, you can just read your done list
+- Collect new tasks while you are working in the backlog column
+- At the beginng of your workday, move the tasks from the backlog column, to Now, Self,...
+- If you have a daily (Scrum) or something simular, you can just read your done list
 
 ![](./ReadmeGif.gif)
 
