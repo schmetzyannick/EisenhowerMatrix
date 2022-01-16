@@ -1,18 +1,20 @@
 import Sequelize, { Model } from "sequelize";
+import { TaskListEnum } from "../types/TaskListEnum";
+import { User } from "./User";
 
-export class User extends Model{
+export class TaskList extends Model{
     /**
      * Counter in the database.
      */
     public id!: number;
     /**
-     * Username.
+     * ListName.
      */
-    public name!: string;
+    public name!: TaskListEnum;
     /**
-     * Password.
+     * Reference to the users table
      */
-    public passwordHash!: string;
+    public userId!: number;
     /**
      * First save timestamp.
      */
@@ -34,13 +36,16 @@ export class User extends Model{
                 type: Sequelize.STRING,
                 allowNull: false
             },
-            passwordHash: {
-                type: Sequelize.STRING,
-                allowNull: false
+            userId: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: User,
+                    key: 'id',
+                }
             },
         }, {
             sequelize,
-            tableName: 'users'
+            tableName: 'tsaklists'
         });
     }
 }

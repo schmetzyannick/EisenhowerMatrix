@@ -1,6 +1,8 @@
 import {Sequelize} from "sequelize";
 import {EnvironementUtils} from "../utils/EnvironementUtils";
 import {Task} from "./Task";
+import { TaskList } from "./TaskList";
+import { User } from "./User";
 
 export class Database {
     public static getInstance(): Database {
@@ -27,6 +29,8 @@ export class Database {
                 logging: true,
             },
         );
+        User.initialize(this.dbInstance);
+        TaskList.initialize(this.dbInstance);
         Task.initialize(this.dbInstance);
     }
 }
