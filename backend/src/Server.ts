@@ -1,6 +1,8 @@
 import express, {Express} from "express";
 import path from "path";
 import {Database} from "./database/Database";
+import { User } from "./database/User";
+import { TaskListRouter } from "./router/TasklistRouter";
 import {Logger} from "./utils/Logger";
 
 export class Server {
@@ -14,10 +16,17 @@ export class Server {
                 .then(() => {
                     db.dbInstance
                         .sync({force: false, alter: true})
-                        .then(() => {
+                        .then(async () => {
                             Server.instance.app.listen(Server.instance.port, () => {
                                 Logger.getLogger().info(`Server listening on port: ${Server.instance.port}`);
                             });
+                            const users = await User.findAll();
+                            if(users.length === 0) {
+                                await User.create({
+                                    name: User.defaultUserName,
+                                    passwordHash: User.defaulUserPasswordHash,
+                                });
+                            }
                         })
                         .catch((err) => {
                             Logger.getLogger().error("Could not start server:", err);
@@ -37,6 +46,7 @@ export class Server {
     constructor(port: number) {
         this.port = port;
         this.app = express();
+        this.app.use(express.json());
         this.app.use(express.static(path.join(__dirname, "../frontend")));
     }
 
@@ -44,6 +54,7 @@ export class Server {
         this.app.get("/", (req, res) => {
             res.sendFile("../frontend/index.html", {root: __dirname});
         });
+        TaskListRouter.registerRoutes(this.app);
     }
 }
 Server.startServer();
