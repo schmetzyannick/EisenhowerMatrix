@@ -17,7 +17,7 @@ export class Task extends Model {
     /**
      * Done or not.
      */
-    public status!: string;
+    public status!: boolean;
     /**
      * Done or not.
      */
@@ -49,7 +49,7 @@ export class Task extends Model {
                     allowNull: false,
                 },
                 status: {
-                    type: Sequelize.STRING,
+                    type: Sequelize.BOOLEAN,
                     allowNull: false,
                 },
                 taskListId: {

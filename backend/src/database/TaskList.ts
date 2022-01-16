@@ -1,5 +1,5 @@
 import Sequelize, { Model } from "sequelize";
-import { TaskListEnum } from "../types/TaskListEnum";
+import { TaskListEnum } from "../../../shared/types/TaskListEnum";
 import { User } from "./User";
 
 export class TaskList extends Model{
