@@ -8,6 +8,8 @@ The project is not just an Einsenhower Matrix, becaus I have added a Done and Ba
     * At the beginng of your workday, move the tasks from the backlog column, to Now, Self,...
     * If you have a daily (Scrum) or something simular, you can just read your done list
 
+![](./ReadmeGif.gif)
+
 # Installation Windows
 
 Be sure that Node.js (https://nodejs.org/en/) is installed on your Host. You also have to install Postgres (https://www.postgresql.org/). After installing both, please donwload this repo as a zip file (and unzip it). Now, you have to configure the service to use the correct postgres db. Edit/Add the following entries in the file ./backend/env.json:
