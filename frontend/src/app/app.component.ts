@@ -37,12 +37,17 @@ export class AppComponent {
 
 
   @HostListener('window:beforeunload', ['$event'])
-  public beforeunloadHandler(event: BeforeUnloadEvent): void {
-    TaskPersistenceUtils.saveTaskSections(this.listRefs);
+  public async beforeunloadHandler(event: BeforeUnloadEvent): Promise<void> {
+    await TaskPersistenceUtils.saveTaskSections(this.listRefs);
   }
 
   private loadAllTasks(): void {
-    this.listRefs = TaskPersistenceUtils.loadAllTaskSections(this.listRefs);
+    TaskPersistenceUtils.loadAllTaskSections(this.listRefs).then((res) => {
+      this.listRefs = res.listRefs;
+      this.taskCounter = res.counter;
+    }).catch((err) => {
+      console.error(err);
+    });
   }
 
   public addTask(listName: string): void {
