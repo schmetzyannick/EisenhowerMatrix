@@ -1,4 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$yello-palett: (
+    50: #fcf7e0,
+    100: #f8e9b0,
+    200: #f3db7d,
+    300: #eece47,
+    400: #ecc21a,
+    500: #eab800,
+    600: #ebab00,
+    700: #eb9800,
+    800: #eb8800,
+    900: #eb6900,
+    contrast: (
+        50: #e8e9fd,
+        100: #c6c8fa,
+        200: #9da4f7,
+        300: #7180f4,
+        400: #4d62f1,
+        500: #1a44ec,
+        600: #143be0,
+        700: #002fd4,
+        800: #0022c9,
+        900: #0000b9,
+    )
+);
+
+$yellow-theme-primary: mat.define-palette($yello-palett, 500);
+$yellow-theme-accent: mat.define-palette($yello-palett, A200, A100, A400);
+
+$yello-theme: mat.define-light-theme((
+ color: (
+   primary: $yellow-theme-primary,
+   accent: $yellow-theme-accent,
+ )
+));
+
+@include mat.all-component-themes($yello-theme);
 
 html, body {
   height: 100%;
