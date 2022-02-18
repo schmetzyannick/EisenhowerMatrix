@@ -6,35 +6,58 @@ import { TaskListRouter } from "./router/TasklistRouter";
 import {Logger} from "./utils/Logger";
 
 export class Server {
+    /**
+     * Create the default user.
+     */
+    public static async createDefaultUserIfThereIsNoUser(): Promise<void> {
+        const users = await User.findAll();
+        if(users.length === 0) {
+            await User.create({
+                name: User.defaultUserName,
+                passwordHash: User.defaulUserPasswordHash,
+            });
+        }
+    }
+
+    /**
+     * Start the database connection.
+     * @param database The database to connect to.
+     */
+    private static async startDatabaseConnection(database: Database): Promise<void> {
+        let couldConnect = false;
+        while (!couldConnect) {
+            try{
+                await database.dbInstance.authenticate();
+                await database.dbInstance.sync({force: false, alter: true});
+                couldConnect = true;
+            }catch(err){
+                Logger.getLogger().error("Could not start database connection:", err);
+                await new Promise<void>((resolve) => {
+                    setTimeout(() => {
+                        resolve();
+                    }, 10000);
+                })
+            }
+        }
+    }
+
+    /**
+     * Starts the server.
+     */
     public static startServer(): void {
         if (this.instance === undefined) {
             Server.instance = new Server(4200);
             Server.instance.registerRoutes();
             const db = Database.getInstance();
-            db.dbInstance
-                .authenticate()
-                .then(() => {
-                    db.dbInstance
-                        .sync({force: false, alter: true})
-                        .then(async () => {
-                            Server.instance.app.listen(Server.instance.port, () => {
-                                Logger.getLogger().info(`Server listening on port: ${Server.instance.port}`);
-                            });
-                            const users = await User.findAll();
-                            if(users.length === 0) {
-                                await User.create({
-                                    name: User.defaultUserName,
-                                    passwordHash: User.defaulUserPasswordHash,
-                                });
-                            }
-                        })
-                        .catch((err) => {
-                            Logger.getLogger().error("Could not start server:", err);
-                        });
-                })
-                .catch((err) => {
-                    Logger.getLogger().error("Could not start server:", err);
+            this.startDatabaseConnection(db).then(async () => {
+                await Server.createDefaultUserIfThereIsNoUser();
+                Server.instance.app.listen(Server.instance.port, () => {
+                    Logger.getLogger().info(`Server listening on port: ${Server.instance.port}`);
                 });
+            }).catch((err) => {
+                Logger.getLogger().error("Error while not startDatabaseConnection:", err);
+                process.exit(1);
+            });
         }
     }
 
