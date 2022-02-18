@@ -29,7 +29,7 @@ $yello-palett: (
 );
 
 $yellow-theme-primary: mat.define-palette($yello-palett, 500);
-$yellow-theme-accent: mat.define-palette($yello-palett, A200, A100, A400);
+$yellow-theme-accent: mat.define-palette($yello-palett, 200, 100, 400);
 
 $yello-theme: mat.define-light-theme((
  color: (
