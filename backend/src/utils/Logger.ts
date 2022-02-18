@@ -1,9 +1,7 @@
 import Bunyan from "bunyan";
 import fs from "fs";
 import path from "path";
-// .d.ts file missing
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const bunyanDebugStream = require("bunyan-debug-stream");
+import * as bunyanDebugStream from "bunyan-debug-stream";
 
 /**
  * Abstract Logger, each service should have his own logger.
@@ -34,7 +32,8 @@ export class Logger {
             streams: [
                 {
                     level: process.env.NODE_ENV === "production" ? "info" : "debug",
-                    stream: bunyanDebugStream({
+                    type: "raw",
+                    stream: bunyanDebugStream.create({
                         basepath: process.cwd(),
                         forceColor: true,
                     }),

@@ -1,6 +1,11 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const nodeExternals = require("webpack-node-externals");
+const fs = require("fs");
+
+if(!fs.existsSync(path.join(__dirname, "backend", "env.json"))) {
+    fs.writeFileSync(path.join(__dirname, "backend", "env.json"), "{}");
+}
 
 const webpackConfig = {
   mode: "development",
@@ -38,7 +43,10 @@ const webpackConfig = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: path.join(__dirname, "backend", "env.json"), to: path.join(__dirname, "dist", "backend", "env.json") },
+        { 
+          from: path.join(__dirname, "backend", "env.json"), 
+          to: path.join(__dirname, "dist", "backend", "env.json")
+        },
       ],
     }),
   ],
