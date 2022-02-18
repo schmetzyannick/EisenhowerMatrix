@@ -109,3 +109,4 @@ dist
 
 *.json
 frontend/.angular/cache/
+backend/env.json
