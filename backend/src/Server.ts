@@ -3,6 +3,7 @@ import path from "path";
 import {Database} from "./database/Database";
 import { User } from "./database/User";
 import { TaskListRouter } from "./router/TasklistRouter";
+import { TaskRouter } from "./router/TaskRouter";
 import {Logger} from "./utils/Logger";
 
 export class Server {
@@ -78,6 +79,7 @@ export class Server {
             res.sendFile("../frontend/index.html", {root: __dirname});
         });
         TaskListRouter.registerRoutes(this.app);
+        TaskRouter.registerRoutes(this.app);
     }
 }
 Server.startServer();

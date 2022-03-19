@@ -1,7 +1,6 @@
 import { TaskListEnum } from "./TaskListEnum";
-
 /**
- * Represents a tasklist send from to the client.
+ * Represents a tasklist.
  */
 export interface IApiTaskList {
     /**

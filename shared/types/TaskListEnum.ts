@@ -2,9 +2,9 @@
  * Enum that contains all the possible task list names.
  */
 export enum TaskListEnum {
-    Backlock = 'Backlock',
+    Backlog = 'Backlog',
     Done = 'Done',
-    Self = 'Self',
+    Now = 'Now',
     Delegate = 'Delegate',
     Own = 'Own',
     Trash = 'Trash',
