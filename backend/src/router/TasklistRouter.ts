@@ -66,6 +66,7 @@ export class TaskListRouter{
 
     private static async createTaskList(req: express.Request, res: express.Response): Promise<void>{
         if(req.body.listName === undefined || typeof req.body.listName !== "string"){
+            res.status(404).send({error: "Please provide a list name!"});
             throw new Error("Please provide a list name!");
         }
         // TODO: multi user comatibility
@@ -80,8 +81,10 @@ export class TaskListRouter{
                 userId: user.id,
             });
             if(newList ===null){
+                res.status(500).send({error: `Could not create tasklist ${req.body.listName}`});
                 throw new Error(`Could not create tasklist ${req.body.listName}`);
             }
         }
+        res.status(200).send();
     }
 }

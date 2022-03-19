@@ -115,14 +115,14 @@ export class TaskPersistenceUtils {
             app.ownSection.sectionTitle,
             app.doneSection.sectionTitle,
         ];
-        for (const listName of listNames) {
-            await fetch(serverHost + 'api/task', {
+        for (const name of listNames) {
+            await fetch(serverHost + 'api/tasklist', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    listName: listName,
+                    listName: name,
                 }),
             });
         }

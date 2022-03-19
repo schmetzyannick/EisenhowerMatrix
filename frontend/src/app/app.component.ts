@@ -48,20 +48,22 @@ export class AppComponent {
             });
     }
 
-    public async addTask(listName: string): Promise<void> {
+    public addTask(listName: string): void {
         const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === listName);
         if (section !== undefined) {
             const taskToAdd: [string, string, boolean] = ['Task' + this.taskCounter, 'Task' + this.taskCounter, false];
             section?.taskList.push(taskToAdd);
             this.taskCounter++;
-            await TaskPersistenceUtils.addTask({
+            TaskPersistenceUtils.addTask({
                 name: section.sectionTitle as TaskListEnum,
                 task: taskToAdd,
+            }).catch((err) => {
+                console.error(err);
             });
         }
     }
 
-    public async deleteTask(params: [string, string]): Promise<void> {
+    public deleteTask(params: [string, string]): void {
         const listName = params[0];
         const ident = params[1];
         const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === listName);
@@ -70,14 +72,16 @@ export class AppComponent {
                 section.taskList.findIndex((task) => task[0] === ident),
                 1,
             );
-            await TaskPersistenceUtils.removeTask({
+            TaskPersistenceUtils.removeTask({
                 name: section.sectionTitle,
                 task: [ident, '', false],
+            }).catch((err) => {
+                console.error(err);
             });
         }
     }
 
-    public async updateTask(params: [string, string, string]): Promise<void> {
+    public updateTask(params: [string, string, string]): void {
         const listName = params[0];
         const ident = params[1];
         const desc = params[2];
@@ -85,14 +89,16 @@ export class AppComponent {
         if (section !== undefined) {
             const taskIndex = section.taskList.findIndex((task) => task[0] === ident);
             section.taskList[taskIndex][1] = desc;
-            await TaskPersistenceUtils.updateTask({
+            TaskPersistenceUtils.updateTask({
                 name: section.sectionTitle,
                 task: [ident, desc, section.taskList[taskIndex][2]],
+            }).catch((err) => {
+                console.error(err);
             });
         }
     }
 
-    public async drop(event: CdkDragDrop<[string, string, boolean][]>): Promise<void> {
+    public drop(event: CdkDragDrop<[string, string, boolean][]>): void {
         const dropContainer = document.getElementById(event.container.id);
         const container = dropContainer?.parentNode?.parentNode as HTMLDivElement;
         const titleContainer = container.firstChild;
@@ -112,14 +118,16 @@ export class AppComponent {
             const wrapperDragContainer = dragContainer?.parentNode?.parentNode as HTMLDivElement;
             const titleContainerDrag = wrapperDragContainer.firstChild;
             const titleDragContainer = (titleContainerDrag?.firstChild as HTMLParagraphElement).textContent || '';
-            await TaskPersistenceUtils.moveTask(titleDragContainer, {
+            TaskPersistenceUtils.moveTask(titleDragContainer, {
                 name: section.sectionTitle,
                 task: itemToMove,
+            }).catch((err) => {
+                console.error(err);
             });
         }
     }
 
-    public async taskCheckBoxClicked(params: [string, string, boolean]): Promise<void> {
+    public taskCheckBoxClicked(params: [string, string, boolean]): void {
         const listName = params[0];
         const ident = params[1];
         const checked = params[2];
@@ -130,9 +138,11 @@ export class AppComponent {
             );
             removedItems[0][2] = checked;
             this.backLogSection.taskList.splice(0, 0, removedItems[0]);
-            await TaskPersistenceUtils.moveTask(this.doneSection.sectionTitle, {
+            TaskPersistenceUtils.moveTask(this.doneSection.sectionTitle, {
                 name: this.backLogSection.sectionTitle,
                 task: removedItems[0],
+            }).catch((err) => {
+                console.error(err);
             });
         } else if (checked && listName !== this.doneSection.sectionTitle) {
             const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === listName);
@@ -143,10 +153,12 @@ export class AppComponent {
                 );
                 itemsToMove[0][2] = checked;
                 this.doneSection.taskList.splice(0, 0, itemsToMove[0]);
-                await TaskPersistenceUtils.moveTask(section.sectionTitle, {
-                  name: this.doneSection.sectionTitle,
-                  task: itemsToMove[0],
-              });
+                TaskPersistenceUtils.moveTask(section.sectionTitle, {
+                    name: this.doneSection.sectionTitle,
+                    task: itemsToMove[0],
+                }).catch((err) => {
+                    console.error(err);
+                });
             }
         }
     }
