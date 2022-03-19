@@ -13,26 +13,26 @@
           "strict": true
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "./frontend",
+      "sourceRoot": "./frontend/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../dist/frontend",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "./dist/frontend",
+            "index": "./frontend/src/index.html",
+            "main": "./frontend/src/main.ts",
+            "polyfills": "./frontend/src/polyfills.ts",
+            "tsConfig": "./frontend/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "./frontend/src/favicon.ico",
+              "./frontend/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "src/styles.scss"
+              "./frontend/src/styles.scss"
             ],
             "scripts": []
           },
@@ -52,8 +52,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "./frontend/src/environments/environment.ts",
+                  "with": "./frontend/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -90,18 +90,18 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "main": "./frontend/src/test.ts",
+            "polyfills": "./frontend/src/polyfills.ts",
+            "tsConfig": "./frontend/tsconfig.spec.json",
+            "karmaConfig": "./frontend/karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "./frontend/src/favicon.ico",
+              "./frontend/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "src/styles.scss"
+              "./frontend/src/styles.scss"
             ],
             "scripts": []
           }
