@@ -11,8 +11,9 @@ export class TaskComponent implements OnInit,ITask {
   @Input('ident') ident: string;
   @Input('listName') listName: string;
   @Input('doneState') doneState: boolean;
+  @Input('priorityInList') priorityInList: number;
   @Output() deleteInParent: EventEmitter<[string, string]> = new EventEmitter();
-  @Output() changeTaskValue: EventEmitter<[string, string, string]> = new EventEmitter();
+  @Output() changeTaskValue: EventEmitter<[string, string, string, number]> = new EventEmitter();
   @Output() checkBoxClicked: EventEmitter<[string, string, boolean]> = new EventEmitter();
 
   constructor() {
@@ -20,12 +21,13 @@ export class TaskComponent implements OnInit,ITask {
     this.ident = '';
     this.listName = '';
     this.doneState = false;
+    this.priorityInList = -1;
   }
 
   ngOnInit(): void {}
 
   public sendChangeToParent(): void{
-    this.changeTaskValue.emit([this.listName, this.ident, this.desc]);
+    this.changeTaskValue.emit([this.listName, this.ident, this.desc, this.priorityInList]);
   }
 
   public removeTask(): void{

@@ -10,15 +10,15 @@ export class TaskSection {
   public sectionTitle: TaskListEnum;
   /**
    * Tasks list of the section with following pairs:
-   * [TaskId, Text, Done state]
+   * [TaskId, Text, Done state, priorityInList]
    */
-  public taskList: Array<[string, string, boolean]>;
+  public taskList: Array<[string, string, boolean, number]>;
 
   /**
    * @param title Section title.
    * @param list Task list.
    */
-  constructor(title: TaskListEnum, list: Array<[string, string, boolean]> = []) {
+  constructor(title: TaskListEnum, list: Array<[string, string, boolean, number]> = []) {
     this.sectionTitle = title;
     this.taskList = list;
   }

@@ -73,7 +73,7 @@ export class TaskPersistenceUtils {
                 const frontendSection = sections.find((s) => s.sectionTitle === section.name);
                 if (frontendSection !== undefined) {
                     section.tasks.forEach((task) => {
-                        frontendSection.taskList.push(['Task' + counter, task[1], task[2]]);
+                        frontendSection.taskList.push(['Task' + counter, task[1], task[2], task[3]]);
                         counter++;
                     });
                 }

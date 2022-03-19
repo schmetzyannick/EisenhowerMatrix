@@ -21,6 +21,10 @@ export class Task extends Model {
     /**
      * Done or not.
      */
+     public priorityInList!: number;
+    /**
+     * List id.
+     */
     public taskListId!: number;
     /**
      * First save timestamp.
@@ -50,6 +54,10 @@ export class Task extends Model {
                 },
                 status: {
                     type: Sequelize.BOOLEAN,
+                    allowNull: false,
+                },
+                priorityInList: {
+                    type: Sequelize.INTEGER,
                     allowNull: false,
                 },
                 taskListId: {

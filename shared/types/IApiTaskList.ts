@@ -9,7 +9,7 @@ export interface IApiTaskList {
     name: TaskListEnum;
     /**
      * List of tasks.
-     * [frontendId, text, done state]
+     * [frontendId, text, done state, priorityInList]
      */
-    tasks: Array<[string, string, boolean]>;
+    tasks: Array<[string, string, boolean, number]>;
 }

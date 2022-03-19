@@ -38,6 +38,7 @@ export class TaskRouter {
                     name: task.task[0],
                     description: task.task[1],
                     status: task.task[2],
+                    priorityInList: task.task[3],
                     taskListId: taskList.id,
                 });
             }
@@ -71,6 +72,7 @@ export class TaskRouter {
                     {
                         description: task.task[1],
                         status: task.task[2],
+                        priorityInList: task.task[3],
                     },
                     {
                         where: {
@@ -169,6 +171,7 @@ export class TaskRouter {
                     {
                         description: task.task[1],
                         status: task.task[2],
+                        priorityInList: task.task[3],
                         taskListId: newList.id,
                     },
                     {

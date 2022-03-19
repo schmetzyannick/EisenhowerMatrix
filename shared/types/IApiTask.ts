@@ -22,7 +22,7 @@ export interface IApiTask {
     name: TaskListEnum;
     /**
      * List of tasks.
-     * [frontendId, text, done state]
+     * [frontendId, text, done state, priorityInList]
      */
-    task: [string, string, boolean];
+    task: [string, string, boolean, number];
 }

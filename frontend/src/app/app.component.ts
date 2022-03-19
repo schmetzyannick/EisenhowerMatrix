@@ -51,7 +51,12 @@ export class AppComponent {
     public addTask(listName: string): void {
         const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === listName);
         if (section !== undefined) {
-            const taskToAdd: [string, string, boolean] = ['Task' + this.taskCounter, 'Task' + this.taskCounter, false];
+            const taskToAdd: [string, string, boolean, number] = [
+                'Task' + this.taskCounter,
+                'Task' + this.taskCounter,
+                false,
+                section.taskList.length,
+            ];
             section?.taskList.push(taskToAdd);
             this.taskCounter++;
             TaskPersistenceUtils.addTask({
@@ -74,14 +79,14 @@ export class AppComponent {
             );
             TaskPersistenceUtils.removeTask({
                 name: section.sectionTitle,
-                task: [ident, '', false],
+                task: [ident, '', false, -1],
             }).catch((err) => {
                 console.error(err);
             });
         }
     }
 
-    public updateTask(params: [string, string, string]): void {
+    public updateTask(params: [string, string, string, number]): void {
         const listName = params[0];
         const ident = params[1];
         const desc = params[2];
@@ -91,22 +96,23 @@ export class AppComponent {
             section.taskList[taskIndex][1] = desc;
             TaskPersistenceUtils.updateTask({
                 name: section.sectionTitle,
-                task: [ident, desc, section.taskList[taskIndex][2]],
+                task: [ident, desc, section.taskList[taskIndex][2], params[3]],
             }).catch((err) => {
                 console.error(err);
             });
         }
     }
 
-    public drop(event: CdkDragDrop<[string, string, boolean][]>): void {
+    public drop(event: CdkDragDrop<[string, string, boolean, number][]>): void {
         const dropContainer = document.getElementById(event.container.id);
         const container = dropContainer?.parentNode?.parentNode as HTMLDivElement;
         const titleContainer = container.firstChild;
-        const title = (titleContainer?.firstChild as HTMLParagraphElement).textContent;
+        const title = (titleContainer?.firstChild as HTMLParagraphElement).textContent || "";
         const itemToMove = JSON.parse(JSON.stringify(event.previousContainer.data[event.previousIndex]));
         const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === title);
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+            this.updatePositions(event, title, title);
         } else {
             event.previousContainer.data.splice(event.previousIndex, 1);
             if (section !== undefined) {
@@ -121,9 +127,13 @@ export class AppComponent {
             TaskPersistenceUtils.moveTask(titleDragContainer, {
                 name: section.sectionTitle,
                 task: itemToMove,
-            }).catch((err) => {
-                console.error(err);
-            });
+            })
+                .then(() => {
+                    this.updatePositions(event, title, titleDragContainer);
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
         }
     }
 
@@ -158,6 +168,24 @@ export class AppComponent {
                     task: itemsToMove[0],
                 }).catch((err) => {
                     console.error(err);
+                });
+            }
+        }
+    }
+
+    private updatePositions(event: CdkDragDrop<[string, string, boolean, number][]>, containerName: string, oldContainerName: string): void {
+        event.container.data.sort((a, b) => a[3] - b[3]);
+        for (const task of event.container.data) {
+            TaskPersistenceUtils.updateTask({
+                name: containerName as TaskListEnum,
+                task: task,
+            });
+        }
+        if(oldContainerName !== containerName){
+            for (const task of event.previousContainer.data) {
+                TaskPersistenceUtils.updateTask({
+                    name: oldContainerName as TaskListEnum,
+                    task: task,
                 });
             }
         }

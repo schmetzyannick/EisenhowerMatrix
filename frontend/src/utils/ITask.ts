@@ -3,4 +3,5 @@ export interface ITask{
     ident: string;
     desc: string;
     doneState: boolean;
+    priorityInList: number;
 }

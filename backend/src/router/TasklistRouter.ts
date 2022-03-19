@@ -38,7 +38,7 @@ export class TaskListRouter{
                 if(tasks !== null){
                     result.push({
                         name: list.name,
-                        tasks: tasks.map(task => [task.name, task.description, task.status]),
+                        tasks: tasks.map(task => [task.name, task.description, task.status, task.priorityInList]),
                     });
                 }else{
                     result.push({name: list.name, tasks: []});
