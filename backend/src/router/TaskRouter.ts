@@ -90,7 +90,7 @@ export class TaskRouter {
 
     private static async deleteTask(req: express.Request, res: express.Response): Promise<void> {
         if (req.body.task !== undefined && isIApiTask(req.body.task)) {
-            const task = req.body.tasklist as IApiTask;
+            const task = req.body.task as IApiTask;
             // TODO: multi user comatibility
             const user = await User.findOne({
                 where: {
@@ -114,10 +114,14 @@ export class TaskRouter {
                     },
                 });
                 if (deleted === 0) {
-                    throw new Error(`Could not delete task ${req.body.task.tasks[0]}`);
+                    res.status(404).send({
+                        error: `Could not delete task ${req.body.task.tasks[0]} from tasklist ${taskList.id}`,
+                    });
+                    throw new Error(`Could not delete task ${req.body.task.tasks[0]} from tasklist ${taskList.id}`);
                 }
             }
         } else {
+            res.status(404).send({error: "Please provide a task!"});
             throw new Error("Please provide a list name!");
         }
     }

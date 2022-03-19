@@ -4,28 +4,6 @@ import {IApiTask} from '../../../shared/types/IApiTask';
 import {AppComponent} from 'src/app/app.component';
 
 export class TaskPersistenceUtils {
-    /*public static async saveTaskSections(sections: TaskSection[]): Promise<void> {
-        // save all sections to local storage
-        sections.forEach((section) => {
-            localStorage.setItem(section.sectionTitle, JSON.stringify(section));
-        });
-        const serverHost = window.location.href;
-        await fetch(serverHost + 'api/tasklist', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                taskLists: sections.map((section): IApiTaskList => {
-                    return {
-                        name: section.sectionTitle as TaskListEnum,
-                        tasks: section.taskList,
-                    };
-                }),
-            }),
-        });
-    }*/
-
     public static async addTask(task: IApiTask): Promise<void> {
         const serverHost = window.location.href;
         await fetch(serverHost + 'api/task', {
@@ -42,7 +20,7 @@ export class TaskPersistenceUtils {
     public static async removeTask(task: IApiTask): Promise<void> {
         const serverHost = window.location.href;
         await fetch(serverHost + 'api/task', {
-            method: 'DELETEA',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -78,7 +56,6 @@ export class TaskPersistenceUtils {
             }),
         });
     }
-
 
     public static async loadAllTaskSections(
         sections: TaskSection[],
