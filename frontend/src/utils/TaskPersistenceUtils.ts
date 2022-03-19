@@ -32,7 +32,7 @@ export class TaskPersistenceUtils {
 
     public static async updateTask(newTask: IApiTask): Promise<void> {
         const serverHost = window.location.href;
-        await fetch(serverHost + '/api/task', {
+        await fetch(serverHost + 'api/task', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export class TaskPersistenceUtils {
 
     public static async moveTask(oldTaskListName: string, newTask: IApiTask): Promise<void> {
         const serverHost = window.location.href;
-        await fetch(serverHost + '/api/task', {
+        await fetch(serverHost + 'api/task', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -49,8 +49,8 @@ export class TaskRouter {
     }
 
     private static async updateTask(req: express.Request, res: express.Response): Promise<void> {
-        if (req.body.tasklist !== undefined && isIApiTask(req.body.tasklist)) {
-            const task = req.body.tasklist as IApiTask;
+        if (req.body.task !== undefined && isIApiTask(req.body.task)) {
+            const task = req.body.task as IApiTask;
             // TODO: multi user comatibility
             const user = await User.findOne({
                 where: {
@@ -133,7 +133,7 @@ export class TaskRouter {
             req.body.oldListName !== undefined &&
             typeof req.body.oldListName === "string"
         ) {
-            const task = req.body.tasklist as IApiTask;
+            const task = req.body.task as IApiTask;
             // TODO: multi user comatibility
             const user = await User.findOne({
                 where: {
