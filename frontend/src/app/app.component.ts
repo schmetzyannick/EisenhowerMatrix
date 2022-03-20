@@ -113,13 +113,10 @@ export class AppComponent {
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
             this.updatePositions(event, title, title);
-        } else {
+            return;
+        } else if (section !== undefined) {
             event.previousContainer.data.splice(event.previousIndex, 1);
-            if (section !== undefined) {
-                section.taskList.splice(event.currentIndex, 0, itemToMove);
-            }
-        }
-        if (section !== undefined) {
+            section.taskList.splice(event.currentIndex, 0, itemToMove);
             const dragContainer = document.getElementById(event.previousContainer.id);
             const wrapperDragContainer = dragContainer?.parentNode?.parentNode as HTMLDivElement;
             const titleContainerDrag = wrapperDragContainer.firstChild;
@@ -173,8 +170,8 @@ export class AppComponent {
         }
     }
 
-    private updatePositions(event: CdkDragDrop<[string, string, boolean, number][]>, containerName: string, oldContainerName: string): void {
-        event.container.data.sort((a, b) => a[3] - b[3]);
+    private async updatePositions(event: CdkDragDrop<[string, string, boolean, number][]>, containerName: string, oldContainerName: string): Promise<void> {
+        event.container.data.forEach((task, index) => {task[3] = index});
         for (const task of event.container.data) {
             TaskPersistenceUtils.updateTask({
                 name: containerName as TaskListEnum,
@@ -182,6 +179,7 @@ export class AppComponent {
             });
         }
         if(oldContainerName !== containerName){
+            event.previousContainer.data.forEach((task, index) => {task[3] = index});
             for (const task of event.previousContainer.data) {
                 TaskPersistenceUtils.updateTask({
                     name: oldContainerName as TaskListEnum,

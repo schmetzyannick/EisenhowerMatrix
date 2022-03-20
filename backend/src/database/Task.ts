@@ -59,6 +59,7 @@ export class Task extends Model {
                 priorityInList: {
                     type: Sequelize.INTEGER,
                     allowNull: false,
+                    defaultValue: -1,
                 },
                 taskListId: {
                     type: Sequelize.INTEGER,

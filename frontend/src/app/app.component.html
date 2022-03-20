@@ -154,7 +154,7 @@
           [ident]="task[0]"
           [desc]="task[1]"
           [doneState]="task[2]"
-          priorityInList="task[3]"
+          [priorityInList]="task[3]"
           (deleteInParent)="deleteTask($event)"
           (changeTaskValue)="updateTask($event)"
           (checkBoxClicked)="taskCheckBoxClicked($event)"

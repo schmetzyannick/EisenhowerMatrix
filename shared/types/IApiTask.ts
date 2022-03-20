@@ -5,10 +5,11 @@ export function isIApiTask(obj: any): obj is IApiTask {
         "name" in obj &&
         "task" in obj &&
         Array.isArray(obj.task) &&
-        obj.task.length === 3 &&
+        obj.task.length === 4 &&
         typeof obj.task[0] === "string" &&
         typeof obj.task[1] === "string" &&
-        typeof obj.task[2] === "boolean"
+        typeof obj.task[2] === "boolean" &&
+        typeof obj.task[3] === "number"
     );
 }
 
