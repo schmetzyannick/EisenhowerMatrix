@@ -66,7 +66,8 @@ export class TaskRouter {
                     },
                 });
                 if (taskList === null) {
-                    throw new Error(`Could not find tasklist ${req.body.listName}`);
+                    res.status(404).send({error: `Could not find tasklist ${task.name}`});
+                    throw new Error(`Could not find tasklis ${task.name}`);
                 }
                 const updated = await Task.update(
                     {
@@ -82,12 +83,15 @@ export class TaskRouter {
                     },
                 );
                 if (updated[0] === 0) {
-                    throw new Error(`Could not update task ${req.body.task.tasks[0]}`);
+                    res.status(404).send({error: `Could not update task ${task.task[0]}`});
+                    throw new Error(`Could not update task ${task.task[0]}`);
                 }
             }
         } else {
+            res.status(404).send({error: "Please provide a task!"});
             throw new Error("Please provide a list name!");
         }
+        res.status(200).send();
     }
 
     private static async deleteTask(req: express.Request, res: express.Response): Promise<void> {
@@ -117,15 +121,16 @@ export class TaskRouter {
                 });
                 if (deleted === 0) {
                     res.status(404).send({
-                        error: `Could not delete task ${req.body.task.tasks[0]} from tasklist ${taskList.id}`,
+                        error: `Could not delete task ${task.task[0]} from tasklist ${task.name}`,
                     });
-                    throw new Error(`Could not delete task ${req.body.task.tasks[0]} from tasklist ${taskList.id}`);
+                    throw new Error(`Could not delete task ${task.task[0]} from tasklist ${task.name}`);
                 }
             }
         } else {
             res.status(404).send({error: "Please provide a task!"});
             throw new Error("Please provide a list name!");
         }
+        res.status(200).send();
     }
 
     private static async moveAndUpdateTask(req: express.Request, res: express.Response): Promise<void> {
@@ -156,6 +161,7 @@ export class TaskRouter {
                     },
                 });
                 if (oldList === null || newList === null) {
+                    res.status(404).send({error: `Could not one of the lists  ${req.body.oldListName} or ${task.name}`});
                     throw new Error(`Could not one of the lists  ${req.body.oldListName} or ${task.name}`);
                 }
                 const dbTask = await Task.findOne({
@@ -165,7 +171,8 @@ export class TaskRouter {
                     },
                 });
                 if (dbTask === null) {
-                    throw new Error(`Could not find original task ${req.body.task.tasks[0]}`);
+                    res.status(404).send({error: `Could not find original task ${task.task[0]}`});
+                    throw new Error(`Could not find original task ${task.task[0]}`);
                 }
                 const updated = await Task.update(
                     {
@@ -182,11 +189,14 @@ export class TaskRouter {
                     },
                 );
                 if (updated[0] === 0) {
-                    throw new Error(`Could not update task ${req.body.task.tasks[0]}`);
+                    res.status(404).send({error: `Could not update task ${task.task[0]}`});
+                    throw new Error(`Could not update task ${task.task[0]}`);
                 }
             }
         } else {
+            res.status(404).send({error: "Please provide a list name!"});
             throw new Error("Please provide a list name!");
         }
+        res.status(200).send();
     }
 }
