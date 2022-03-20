@@ -1,0 +1,250 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "jsdoc",
+    "no-floating-promise",
+    "prettier"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "no-tabs": [
+      "error",
+      {
+        "allowIndentationTabs": true
+      }
+    ],
+    "@typescript-eslint/promise-function-async": "error",
+    "no-floating-promise/no-floating-promise": "error",
+    "complexity": [
+      "error",
+      30
+    ],
+    "semi": "off",
+    "@typescript-eslint/semi": [
+      "error"
+    ],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "semi",
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "semi",
+          "requireLast": false
+        },
+        "multilineDetection": "brackets"
+      }
+    ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": [
+          "interface"
+        ],
+        "modifiers": [
+          "exported"
+        ],
+        "format": [
+          "PascalCase"
+        ],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
+    "quote-props": [
+      "error",
+      "as-needed"
+    ],
+    "no-multi-spaces": "error",
+    "no-whitespace-before-property": "error",
+    "no-console": "error",
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "never",
+        "functions": "always-multiline"
+      }
+    ],
+    "no-var": "error",
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "space-before-blocks": [
+      "error",
+      "always"
+    ],
+    "comma-spacing": [
+      "error",
+      {
+        "before": false,
+        "after": true
+      }
+    ],
+    "@typescript-eslint/type-annotation-spacing": [
+      "error",
+      {
+        "after": true
+      }
+    ],
+    "new-cap": [
+      "off"
+    ],
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/no-this-alias": "off",
+    "no-async-promise-executor": "off",
+    "no-unused-expressions": "error",
+    "no-cond-assign": [
+      "error",
+      "always"
+    ],
+    "@typescript-eslint/prefer-for-of": "error",
+    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/member-ordering": [
+      "error",
+      {
+        "default": [
+          // Index signature
+          "signature",
+          // Static
+          "public-static-field",
+          "public-static-method",
+          "protected-static-field",
+          "protected-static-method",
+          "private-static-field",
+          "private-static-method",
+          // Member
+          "public-instance-field",
+          "public-abstract-field",
+          "public-field",
+          "protected-instance-field",
+          "protected-abstract-field",
+          "protected-field",
+          "private-instance-field",
+          "private-abstract-field",
+          "private-field",
+          // Constructors
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+          "constructor",
+          // Methods
+          "public-instance-method",
+          "public-abstract-method",
+          "public-method",
+          "protected-instance-method",
+          "protected-abstract-method",
+          "protected-method",
+          "private-instance-method",
+          "private-abstract-method",
+          "private-method",
+          "method"
+        ]
+      }
+    ],
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/require-await": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "tabWidth": 4,
+        "useTabs": false,
+        "endOfLine": "auto",
+        "trailingComma": "all",
+        "bracketSpacing": false,
+        "parser": "typescript",
+        "printWidth": 120
+      }
+    ],
+    "jsdoc/require-jsdoc": [
+      "error",
+      {
+        "contexts": [
+          "ExportNamedDeclaration TSInterfaceDeclaration",
+          "ExportNamedDeclaration TSTypeAliasDeclaration",
+          "ExportNamedDeclaration TSEnumDeclaration",
+          "ExportNamedDeclaration ClassDeclaration",
+          "MethodDefinition[accessibility=\"public\"]",
+          "TSAbstractMethodDefinition[accessibility=\"public\"]",
+          "ClassProperty[accessibility=\"public\"]",
+          "ExportNamedDeclaration TSInterfaceBody>TSPropertySignature",
+          "MethodDefinition[key.name=\"constructor\"][accessibility!=\"private\"][accessibility!=\"protected\"][value.params.length>0]",
+          "ClassBody > PropertyDefinition[accessibility=\"public\"]"
+        ],
+        "enableFixer":true,
+        "fixerMessage":" TODO: add comment."
+      }
+    ],
+    "jsdoc/require-param": [
+      "error",
+      {
+        "contexts": [
+          "MethodDefinition[accessibility=\"public\"]",
+          "MethodDefinition[key.name=\"constructor\"]"
+        ]
+      }
+    ],
+    "max-depth": [
+      "error",
+      6
+    ],
+    "max-nested-callbacks": [
+      "error",
+      6
+    ],
+    "max-lines-per-function": [
+      "error",
+      40
+    ],
+    "jsdoc/match-description": [
+      "error",
+      {
+        "mainDescription": "[A-Z].*\\.",
+        "tags": {
+          "param": true,
+          "returns": true,
+          "docblock": true
+        }
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "error",
+    "@typescript-eslint/ban-ts-comment": "error",
+    "@typescript-eslint/ban-types": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "max-params": [
+      "error",
+      6
+    ],
+    "max-statements": [
+      "error",
+      40
+    ]
+  },
+  "settings": {
+    "jsdoc": {
+      "allowOverrideWithoutParam": true
+    }
+  }
+}
