@@ -1,10 +1,16 @@
 import {Sequelize} from "sequelize";
 import {EnvironementUtils} from "../utils/EnvironementUtils";
 import {Task} from "./Task";
-import { TaskList } from "./TaskList";
-import { User } from "./User";
+import {TaskList} from "./TaskList";
+import {User} from "./User";
 
+/**
+ * Represents the database.
+ */
 export class Database {
+    /**
+     * Return the singelton db instace.
+     */
     public static getInstance(): Database {
         if (Database.instance === undefined) {
             Database.instance = new Database();
@@ -14,6 +20,9 @@ export class Database {
 
     private static instance: Database;
 
+    /**
+     * The sequelize instance.
+     */
     public dbInstance: Sequelize;
 
     private constructor() {

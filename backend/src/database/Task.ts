@@ -1,41 +1,15 @@
-import Sequelize, {Model} from "sequelize";
-import { TaskList } from "./TaskList";
+import Sequelize, {Model, Sequelize as SequelizeDatabase} from "sequelize";
+import {TaskList} from "./TaskList";
 
+/**
+ * The task databse model.
+ */
 export class Task extends Model {
     /**
-     * Counter in the database.
+     * Creates the task table in the provided Sequelize instance.
+     * @param sequelize Sequelize instance to.
      */
-    public id!: number;
-    /**
-     * Frountend Id.
-     */
-    public name!: string;
-    /**
-     * Text set by user.
-     */
-    public description!: string;
-    /**
-     * Done or not.
-     */
-    public status!: boolean;
-    /**
-     * Done or not.
-     */
-     public priorityInList!: number;
-    /**
-     * List id.
-     */
-    public taskListId!: number;
-    /**
-     * First save timestamp.
-     */
-    public createdAt!: Date;
-    /**
-     * Last save timestamp.
-     */
-    public updatedAt!: Date;
-
-    public static initialize(sequelize: any): void {
+    public static initialize(sequelize: SequelizeDatabase): void {
         this.init(
             {
                 id: {
@@ -65,9 +39,9 @@ export class Task extends Model {
                     type: Sequelize.INTEGER,
                     references: {
                         model: TaskList,
-                        key: 'id',
-                    }
-                }
+                        key: "id",
+                    },
+                },
             },
             {
                 sequelize,
@@ -75,4 +49,37 @@ export class Task extends Model {
             },
         );
     }
+
+    /**
+     * Counter in the database.
+     */
+    public id!: number;
+    /**
+     * Frountend Id.
+     */
+    public name!: string;
+    /**
+     * Text set by user.
+     */
+    public description!: string;
+    /**
+     * Done or not.
+     */
+    public status!: boolean;
+    /**
+     * Done or not.
+     */
+    public priorityInList!: number;
+    /**
+     * List id.
+     */
+    public taskListId!: number;
+    /**
+     * First save timestamp.
+     */
+    public createdAt!: Date;
+    /**
+     * Last save timestamp.
+     */
+    public updatedAt!: Date;
 }

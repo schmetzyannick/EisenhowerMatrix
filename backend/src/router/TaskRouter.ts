@@ -3,8 +3,16 @@ import {User} from "../database/User";
 import {IApiTask, isIApiTask} from "../../../shared/types/IApiTask";
 import {TaskList} from "../database/TaskList";
 import {Task} from "../database/Task";
+import {ResponseUtils} from "../utils/ResonseUtils";
 
+/**
+ * Router for the tasks.
+ */
 export class TaskRouter {
+    /**
+     * Must be called to register the routes.
+     * @param app The application on wich the routes will be rigistred.
+     */
     public static registerRoutes(app: express.Application): void {
         app.put(TaskRouter.path, TaskRouter.createTask);
         app.post(TaskRouter.path, TaskRouter.moveAndUpdateTask);
@@ -13,6 +21,14 @@ export class TaskRouter {
     }
 
     private static path = "/api/task";
+
+    private static async getUser(): Promise<User | null> {
+        return await User.findOne({
+            where: {
+                name: "admin",
+            },
+        });
+    }
 
     private static async createTask(req: express.Request, res: express.Response): Promise<void> {
         if (req.body.task !== undefined && isIApiTask(req.body.task)) {
@@ -31,8 +47,7 @@ export class TaskRouter {
                     },
                 });
                 if (taskList === null) {
-                    res.status(404).send(`Could not find tasklist ${req.body.listName}`);
-                    throw new Error(`Could not find tasklist ${req.body.listName}`);
+                    return;
                 }
                 await Task.create({
                     name: task.task[0],
@@ -43,21 +58,15 @@ export class TaskRouter {
                 });
             }
         } else {
-            res.status(404).send({error: "Please provide a task!"});
-            throw new Error("Please provide a task!");
+            ResponseUtils.sendResponseUserError(res, "Please provide a proper task!");
         }
-        res.status(200).send();
+        ResponseUtils.sendResponseOk(res, {});
     }
 
     private static async updateTask(req: express.Request, res: express.Response): Promise<void> {
         if (req.body.task !== undefined && isIApiTask(req.body.task)) {
             const task = req.body.task as IApiTask;
-            // TODO: multi user comatibility
-            const user = await User.findOne({
-                where: {
-                    name: "admin",
-                },
-            });
+            const user = await TaskRouter.getUser();
             if (user !== null) {
                 const taskList = await TaskList.findOne({
                     where: {
@@ -66,8 +75,8 @@ export class TaskRouter {
                     },
                 });
                 if (taskList === null) {
-                    res.status(404).send({error: `Could not find tasklist ${task.name}`});
-                    throw new Error(`Could not find tasklis ${task.name}`);
+                    ResponseUtils.sendResponseUserError(res, `Could not find tasklist ${task.name}`);
+                    return;
                 }
                 const updated = await Task.update(
                     {
@@ -83,26 +92,20 @@ export class TaskRouter {
                     },
                 );
                 if (updated[0] === 0) {
-                    res.status(404).send({error: `Could not update task ${task.task[0]}`});
-                    throw new Error(`Could not update task ${task.task[0]}`);
+                    ResponseUtils.sendResponseUserError(res, `Could not update task ${task.task[0]}`);
                 }
             }
         } else {
-            res.status(404).send({error: "Please provide a task!"});
-            throw new Error("Please provide a list name!");
+            ResponseUtils.sendResponseUserError(res, "Please provide a proper task!");
         }
-        res.status(200).send();
+        ResponseUtils.sendResponseOk(res, {});
     }
 
     private static async deleteTask(req: express.Request, res: express.Response): Promise<void> {
         if (req.body.task !== undefined && isIApiTask(req.body.task)) {
             const task = req.body.task as IApiTask;
             // TODO: multi user comatibility
-            const user = await User.findOne({
-                where: {
-                    name: "admin",
-                },
-            });
+            const user = await TaskRouter.getUser();
             if (user !== null) {
                 const taskList = await TaskList.findOne({
                     where: {
@@ -111,7 +114,8 @@ export class TaskRouter {
                     },
                 });
                 if (taskList === null) {
-                    throw new Error(`Could not find tasklist ${req.body.listName}`);
+                    ResponseUtils.sendResponseUserError(res, `Could not find tasklist ${req.body.listName}`);
+                    return;
                 }
                 const deleted = await Task.destroy({
                     where: {
@@ -120,19 +124,20 @@ export class TaskRouter {
                     },
                 });
                 if (deleted === 0) {
-                    res.status(404).send({
-                        error: `Could not delete task ${task.task[0]} from tasklist ${task.name}`,
-                    });
-                    throw new Error(`Could not delete task ${task.task[0]} from tasklist ${task.name}`);
+                    ResponseUtils.sendResponseUserError(
+                        res,
+                        `Could not delete task ${task.task[0]} from tasklist ${task.name}`,
+                    );
                 }
             }
         } else {
-            res.status(404).send({error: "Please provide a task!"});
-            throw new Error("Please provide a list name!");
+            ResponseUtils.sendResponseUserError(res, "Please provide a proper task!");
         }
-        res.status(200).send();
+        ResponseUtils.sendResponseOk(res, {});
     }
 
+    // TODO: Refactore me
+    // eslint-disable-next-line max-lines-per-function
     private static async moveAndUpdateTask(req: express.Request, res: express.Response): Promise<void> {
         if (
             req.body.task !== undefined &&
@@ -142,11 +147,7 @@ export class TaskRouter {
         ) {
             const task = req.body.task as IApiTask;
             // TODO: multi user comatibility
-            const user = await User.findOne({
-                where: {
-                    name: "admin",
-                },
-            });
+            const user = await TaskRouter.getUser();
             if (user !== null) {
                 const oldList = await TaskList.findOne({
                     where: {
@@ -161,8 +162,11 @@ export class TaskRouter {
                     },
                 });
                 if (oldList === null || newList === null) {
-                    res.status(404).send({error: `Could not one of the lists  ${req.body.oldListName} or ${task.name}`});
-                    throw new Error(`Could not one of the lists  ${req.body.oldListName} or ${task.name}`);
+                    ResponseUtils.sendResponseUserError(
+                        res,
+                        `Could not one of the lists  ${req.body.oldListName} or ${task.name}`,
+                    );
+                    return;
                 }
                 const dbTask = await Task.findOne({
                     where: {
@@ -171,8 +175,8 @@ export class TaskRouter {
                     },
                 });
                 if (dbTask === null) {
-                    res.status(404).send({error: `Could not find original task ${task.task[0]}`});
-                    throw new Error(`Could not find original task ${task.task[0]}`);
+                    ResponseUtils.sendResponseUserError(res, `Could not find original task ${task.task[0]}`);
+                    return;
                 }
                 const updated = await Task.update(
                     {
@@ -189,14 +193,12 @@ export class TaskRouter {
                     },
                 );
                 if (updated[0] === 0) {
-                    res.status(404).send({error: `Could not update task ${task.task[0]}`});
-                    throw new Error(`Could not update task ${task.task[0]}`);
+                    ResponseUtils.sendResponseUserError(res, `Could not update task ${task.task[0]}`);
                 }
             }
         } else {
-            res.status(404).send({error: "Please provide a list name!"});
-            throw new Error("Please provide a list name!");
+            ResponseUtils.sendResponseUserError(res, "Please provide a proper task!");
         }
-        res.status(200).send();
+        ResponseUtils.sendResponseOk(res, {});
     }
 }

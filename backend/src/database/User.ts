@@ -1,11 +1,47 @@
-import Sequelize, { Model } from "sequelize";
+import Sequelize, {Model, Sequelize as SequelizeDatabase} from "sequelize";
 
-export class User extends Model{
-
+/**
+ * Represents the user model.
+ */
+export class User extends Model {
+    /**
+     * The default user that is created when the application is started and there is no user.
+     */
     public static defaultUserName: string = "admin";
-    // Projectname crypted via bcryptjs
+    /**
+     * Password hash for the default user.
+     */
     public static defaulUserPasswordHash: string = "$2a$13$hr45rwl1kyIISTXmirx6PuvuvyKHIw1Mmd9xcgBHGi7LFuxj05/FK";
-    
+
+    /**
+     * Creates the user table in the provided Sequelize instance.
+     * @param sequelize Sequelize instance to.
+     */
+    public static initialize(sequelize: SequelizeDatabase): void {
+        this.init(
+            {
+                id: {
+                    type: Sequelize.INTEGER,
+                    allowNull: false,
+                    autoIncrement: true,
+                    primaryKey: true,
+                },
+                name: {
+                    type: Sequelize.STRING,
+                    allowNull: false,
+                },
+                passwordHash: {
+                    type: Sequelize.STRING,
+                    allowNull: false,
+                },
+            },
+            {
+                sequelize,
+                tableName: "users",
+            },
+        );
+    }
+
     /**
      * Counter in the database.
      */
@@ -26,26 +62,4 @@ export class User extends Model{
      * Last save timestamp.
      */
     public updatedAt!: Date;
-
-    public static initialize(sequelize: any): void {
-        this.init({
-            id: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                autoIncrement: true,
-                primaryKey: true
-            },
-            name: {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
-            passwordHash: {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
-        }, {
-            sequelize,
-            tableName: 'users'
-        });
-    }
 }

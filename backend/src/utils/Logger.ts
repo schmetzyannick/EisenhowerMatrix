@@ -17,9 +17,9 @@ export class Logger {
         return Logger.instance.bunyanLogger;
     }
 
-    protected readonly bunyanLogger: Bunyan;
-
     private static instance: Logger;
+
+    protected readonly bunyanLogger: Bunyan;
 
     protected constructor(name: string) {
         const logFilePath = path.join(process.cwd(), "logs", name + ".log");

@@ -3,21 +3,49 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {TaskSection} from 'src/utils/TaskSection';
 import {TaskPersistenceUtils} from 'src/utils/TaskPersistenceUtils';
 import {TaskListEnum} from '../../../shared/types/TaskListEnum';
+import {Logger} from 'src/utils/Logger';
 
+/**
+ * TODO: add comment.
+ */
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+    /**
+     * The done task section.
+     */
     public doneSection: TaskSection;
+    /**
+     * The backlog task section.
+     */
     public backLogSection: TaskSection;
+    /**
+     * The new task section.
+     */
     public nowSection: TaskSection;
+    /**
+     * The own task section.
+     */
     public ownSection: TaskSection;
+    /**
+     * The delegate task section.
+     */
     public delegateSection: TaskSection;
+    /**
+     * The trash task section.
+     */
     public trashSection: TaskSection;
 
+    /**
+     * The task counter.
+     */
     public taskCounter = 0;
+    /**
+     * Refs to all sections.
+     */
     public listRefs: TaskSection[];
 
     constructor() {
@@ -37,17 +65,10 @@ export class AppComponent {
         this.loadAllTasks();
     }
 
-    private loadAllTasks(): void {
-        TaskPersistenceUtils.loadAllTaskSections(this.listRefs, this)
-            .then((res) => {
-                this.listRefs = res.listRefs;
-                this.taskCounter = res.counter;
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }
-
+    /**
+     * Adds a task.
+     * @param listName Section to add the task to.
+     */
     public addTask(listName: string): void {
         const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === listName);
         if (section !== undefined) {
@@ -63,11 +84,15 @@ export class AppComponent {
                 name: section.sectionTitle as TaskListEnum,
                 task: taskToAdd,
             }).catch((err) => {
-                console.error(err);
+                Logger.error(err);
             });
         }
     }
 
+    /**
+     * Deletes a task.
+     * @param params Section name and task name, of the task that should be deleted.
+     */
     public deleteTask(params: [string, string]): void {
         const listName = params[0];
         const ident = params[1];
@@ -81,11 +106,15 @@ export class AppComponent {
                 name: section.sectionTitle,
                 task: [ident, '', false, -1],
             }).catch((err) => {
-                console.error(err);
+                Logger.error(err);
             });
         }
     }
 
+    /**
+     * Updates the task.
+     * @param params Task members for the update.
+     */
     public updateTask(params: [string, string, string, number]): void {
         const listName = params[0];
         const ident = params[1];
@@ -98,21 +127,27 @@ export class AppComponent {
                 name: section.sectionTitle,
                 task: [ident, desc, section.taskList[taskIndex][2], params[3]],
             }).catch((err) => {
-                console.error(err);
+                Logger.error(err);
             });
         }
     }
 
+    /**
+     * Handels the drop event of a task in a section.
+     * @param event The angular drop event.
+     */
     public drop(event: CdkDragDrop<[string, string, boolean, number][]>): void {
         const dropContainer = document.getElementById(event.container.id);
         const container = dropContainer?.parentNode?.parentNode as HTMLDivElement;
         const titleContainer = container.firstChild;
-        const title = (titleContainer?.firstChild as HTMLParagraphElement).textContent || "";
+        const title = (titleContainer?.firstChild as HTMLParagraphElement).textContent || '';
         const itemToMove = JSON.parse(JSON.stringify(event.previousContainer.data[event.previousIndex]));
         const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === title);
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-            this.updatePositions(event, title, title);
+            this.updatePositions(event, title, title).catch((err) => {
+                Logger.error(err);
+            });
             return;
         } else if (section !== undefined) {
             event.previousContainer.data.splice(event.previousIndex, 1);
@@ -126,14 +161,20 @@ export class AppComponent {
                 task: itemToMove,
             })
                 .then(() => {
-                    this.updatePositions(event, title, titleDragContainer);
+                    this.updatePositions(event, title, titleDragContainer).catch((err) => {
+                        Logger.error(err);
+                    });
                 })
                 .catch((err) => {
-                    console.error(err);
+                    Logger.error(err);
                 });
         }
     }
 
+    /**
+     * Task checkbox click handler.
+     * @param params The list name, task name and checked state.
+     */
     public taskCheckBoxClicked(params: [string, string, boolean]): void {
         const listName = params[0];
         const ident = params[1];
@@ -149,7 +190,7 @@ export class AppComponent {
                 name: this.backLogSection.sectionTitle,
                 task: removedItems[0],
             }).catch((err) => {
-                console.error(err);
+                Logger.error(err);
             });
         } else if (checked && listName !== this.doneSection.sectionTitle) {
             const section = this.listRefs.find((taskSection) => taskSection.sectionTitle === listName);
@@ -164,22 +205,41 @@ export class AppComponent {
                     name: this.doneSection.sectionTitle,
                     task: itemsToMove[0],
                 }).catch((err) => {
-                    console.error(err);
+                    Logger.error(err);
                 });
             }
         }
     }
 
-    private async updatePositions(event: CdkDragDrop<[string, string, boolean, number][]>, containerName: string, oldContainerName: string): Promise<void> {
-        event.container.data.forEach((task, index) => {task[3] = index});
+    private loadAllTasks(): void {
+        TaskPersistenceUtils.loadAllTaskSections(this.listRefs, this)
+            .then((res) => {
+                this.listRefs = res.listRefs;
+                this.taskCounter = res.counter;
+            })
+            .catch((err) => {
+                Logger.error(err);
+            });
+    }
+
+    private async updatePositions(
+        event: CdkDragDrop<[string, string, boolean, number][]>,
+        containerName: string,
+        oldContainerName: string,
+    ): Promise<void> {
+        event.container.data.forEach((task, index) => {
+            task[3] = index;
+        });
         for (const task of event.container.data) {
             TaskPersistenceUtils.updateTask({
                 name: containerName as TaskListEnum,
                 task: task,
             });
         }
-        if(oldContainerName !== containerName){
-            event.previousContainer.data.forEach((task, index) => {task[3] = index});
+        if (oldContainerName !== containerName) {
+            event.previousContainer.data.forEach((task, index) => {
+                task[3] = index;
+            });
             for (const task of event.previousContainer.data) {
                 TaskPersistenceUtils.updateTask({
                     name: oldContainerName as TaskListEnum,

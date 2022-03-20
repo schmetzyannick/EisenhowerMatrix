@@ -7,7 +7,6 @@ import base64 from "base-64";
  * Singeton class to get the current environment.
  */
 export class EnvironementUtils {
-    private static instance: EnvironementUtils;
     /**
      * Instance getter.
      */
@@ -16,6 +15,12 @@ export class EnvironementUtils {
             EnvironementUtils.instance = new EnvironementUtils();
         }
         return EnvironementUtils.instance;
+    }
+
+    private static instance: EnvironementUtils;
+
+    protected constructor() {
+        nconf.file({file: path.join(__dirname, "env.json")});
     }
 
     /**
@@ -59,15 +64,10 @@ export class EnvironementUtils {
      */
     public getPostgresPassword(): string {
         const password = nconf.get("postgresPassword") || "postgres";
-        if(password === "postgres") {
+        if (password === "postgres") {
             return password;
-        }else{
+        } else {
             return base64.decode(password);
         }
-    }
-
-
-    protected constructor() {
-        nconf.file({file: path.join(__dirname, "env.json")});
     }
 }

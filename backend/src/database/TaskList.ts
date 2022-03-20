@@ -1,8 +1,43 @@
-import Sequelize, { Model } from "sequelize";
-import { TaskListEnum } from "../../../shared/types/TaskListEnum";
-import { User } from "./User";
+import Sequelize, {Model, Sequelize as SequelizeDatabase} from "sequelize";
+import {TaskListEnum} from "../../../shared/types/TaskListEnum";
+import {User} from "./User";
 
-export class TaskList extends Model{
+/**
+ * The tasklist model.
+ */
+export class TaskList extends Model {
+    /**
+     * Creates the tasklist table in the provided Sequelize instance.
+     * @param sequelize Sequelize instance to.
+     */
+    public static initialize(sequelize: SequelizeDatabase): void {
+        this.init(
+            {
+                id: {
+                    type: Sequelize.INTEGER,
+                    allowNull: false,
+                    autoIncrement: true,
+                    primaryKey: true,
+                },
+                name: {
+                    type: Sequelize.STRING,
+                    allowNull: false,
+                },
+                userId: {
+                    type: Sequelize.INTEGER,
+                    references: {
+                        model: User,
+                        key: "id",
+                    },
+                },
+            },
+            {
+                sequelize,
+                tableName: "tsaklists",
+            },
+        );
+    }
+
     /**
      * Counter in the database.
      */
@@ -23,29 +58,4 @@ export class TaskList extends Model{
      * Last save timestamp.
      */
     public updatedAt!: Date;
-
-    public static initialize(sequelize: any): void {
-        this.init({
-            id: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                autoIncrement: true,
-                primaryKey: true
-            },
-            name: {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
-            userId: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: User,
-                    key: 'id',
-                }
-            },
-        }, {
-            sequelize,
-            tableName: 'tsaklists'
-        });
-    }
 }
