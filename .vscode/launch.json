@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Service",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceRoot}/dist/backend",
+            "program": "${workspaceRoot}/backend/src/Server.ts",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run-script", "backend:serve:dev"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "outFiles": [
+              "${workspaceRoot}/dist/backend/index.js"
+            ],
+            "sourceMaps": true
+        },
+    ]
+}

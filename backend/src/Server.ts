@@ -5,6 +5,8 @@ import { User } from "./database/User";
 import { TaskListRouter } from "./router/TasklistRouter";
 import { TaskRouter } from "./router/TaskRouter";
 import {Logger} from "./utils/Logger";
+import process from 'process';
+import cors from "cors";
 
 export class Server {
     /**
@@ -71,13 +73,15 @@ export class Server {
         this.port = port;
         this.app = express();
         this.app.use(express.json());
-        this.app.use(express.static(path.join(__dirname, "../frontend")));
+        if(process.env.NODE_ENV === "production") {
+            //serve frontend only in prod mode
+            this.app.use(express.static(path.join(__dirname, "../frontend")));
+        }else{
+            this.app.use(cors());
+        }
     }
 
     private registerRoutes(): void {
-        this.app.get("/", (req, res) => {
-            res.sendFile("../frontend/index.html", {root: __dirname});
-        });
         TaskListRouter.registerRoutes(this.app);
         TaskRouter.registerRoutes(this.app);
     }

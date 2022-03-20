@@ -2,10 +2,11 @@ import {TaskSection} from './TaskSection';
 import {IApiTaskList} from '../../../shared/types/IApiTaskList';
 import {IApiTask} from '../../../shared/types/IApiTask';
 import {AppComponent} from 'src/app/app.component';
+import { isDevMode } from '@angular/core';
 
 export class TaskPersistenceUtils {
     public static async addTask(task: IApiTask): Promise<void> {
-        const serverHost = window.location.href;
+        const serverHost = TaskPersistenceUtils.getBackendUrlPrefix();
         await fetch(serverHost + 'api/task', {
             method: 'PUT',
             headers: {
@@ -18,7 +19,7 @@ export class TaskPersistenceUtils {
     }
 
     public static async removeTask(task: IApiTask): Promise<void> {
-        const serverHost = window.location.href;
+        const serverHost = TaskPersistenceUtils.getBackendUrlPrefix();
         await fetch(serverHost + 'api/task', {
             method: 'DELETE',
             headers: {
@@ -31,7 +32,7 @@ export class TaskPersistenceUtils {
     }
 
     public static async updateTask(newTask: IApiTask): Promise<void> {
-        const serverHost = window.location.href;
+        const serverHost = TaskPersistenceUtils.getBackendUrlPrefix();
         await fetch(serverHost + 'api/task', {
             method: 'PATCH',
             headers: {
@@ -44,7 +45,7 @@ export class TaskPersistenceUtils {
     }
 
     public static async moveTask(oldTaskListName: string, newTask: IApiTask): Promise<void> {
-        const serverHost = window.location.href;
+        const serverHost = TaskPersistenceUtils.getBackendUrlPrefix();
         await fetch(serverHost + 'api/task', {
             method: 'POST',
             headers: {
@@ -63,27 +64,35 @@ export class TaskPersistenceUtils {
     ): Promise<{listRefs: TaskSection[]; counter: number}> {
         // load sections from local storage
         let counter = 1;
-        const serverHost = window.location.href;
+        const serverHost = TaskPersistenceUtils.getBackendUrlPrefix();
         const taskListsResp = await fetch(serverHost + 'api/tasklist');
         const taskLists = (await taskListsResp.json()).taskLists as IApiTaskList[];
         if (taskLists.length === 0) {
             return await TaskPersistenceUtils.createSections(app);
         } else {
-            taskLists.forEach((section: IApiTaskList) => {
+            for(const section of taskLists) {
                 const frontendSection = sections.find((s) => s.sectionTitle === section.name);
                 if (frontendSection !== undefined) {
-                    section.tasks.forEach((task) => {
-                        frontendSection.taskList.push(['Task' + counter, task[1], task[2], task[3]]);
+                    for(let task of section.tasks) {
+                        if(task[3] === -1){
+                            // migrates default values priorityInList
+                            task[3] = counter;
+                        }
+                        await TaskPersistenceUtils.removeTask({name: section.name, task});
+                        task = ['Task' + counter, task[1], task[2], task[3]]
+                        frontendSection.taskList.push(task);
+                        await TaskPersistenceUtils.addTask({name: section.name, task});
                         counter++;
-                    });
+                    }
+                    frontendSection.taskList.sort((a, b) => a[3] - b[3]);
                 }
-            });
+            }
             return {listRefs: sections, counter: counter};
         }
     }
 
     private static async createSections(app: AppComponent): Promise<{listRefs: TaskSection[]; counter: number}> {
-        const serverHost = window.location.href;
+        const serverHost = TaskPersistenceUtils.getBackendUrlPrefix();
         const listNames = [
             app.backLogSection.sectionTitle,
             app.trashSection.sectionTitle,
@@ -134,4 +143,11 @@ export class TaskPersistenceUtils {
         };
     }
 
+    private static getBackendUrlPrefix(): string {
+        if(isDevMode()){
+            return 'http://localhost:4200/';
+        }else{
+            return window.location.href;
+        }
+    }
 }
