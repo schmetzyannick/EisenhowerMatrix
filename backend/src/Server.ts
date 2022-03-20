@@ -73,11 +73,11 @@ export class Server {
         this.port = port;
         this.app = express();
         this.app.use(express.json());
-        if(process.env.NODE_ENV === "production") {
+        if(process.env.NODE_ENV === "development") {
+            this.app.use(cors());
+        }else{
             //serve frontend only in prod mode
             this.app.use(express.static(path.join(__dirname, "../frontend")));
-        }else{
-            this.app.use(cors());
         }
     }
 
