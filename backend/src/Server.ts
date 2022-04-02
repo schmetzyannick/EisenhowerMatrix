@@ -82,6 +82,7 @@ export class Server {
         this.port = port;
         this.app = express();
         this.app.use(express.json());
+        Logger.getLogger().info("Start server for", process.env.NODE_ENV);
         if (process.env.NODE_ENV === "development") {
             this.app.use(cors());
         } else {
