@@ -1,15 +1,20 @@
 import {TaskListEnum} from "./TaskListEnum";
 
-export function isIApiTask(obj: any): obj is IApiTask {
+/**
+ * Checks if it is a valid task.
+ */
+export function isIApiTask(obj: unknown): obj is IApiTask {
     return (
+        typeof obj === "object" &&
+        obj !== null &&
         "name" in obj &&
         "task" in obj &&
-        Array.isArray(obj.task) &&
-        obj.task.length === 4 &&
-        typeof obj.task[0] === "string" &&
-        typeof obj.task[1] === "string" &&
-        typeof obj.task[2] === "boolean" &&
-        typeof obj.task[3] === "number"
+        Array.isArray((obj as {task: unknown[]}).task) &&
+        (obj as {task: unknown[]}).task.length === 4 &&
+        typeof (obj as {task: unknown[]}).task[0] === "string" &&
+        typeof (obj as {task: unknown[]}).task[1] === "string" &&
+        typeof (obj as {task: unknown[]}).task[2] === "boolean" &&
+        typeof (obj as {task: unknown[]}).task[3] === "number"
     );
 }
 

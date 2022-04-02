@@ -1,4 +1,4 @@
-import { TaskListEnum } from "./TaskListEnum";
+import {TaskListEnum} from "./TaskListEnum";
 /**
  * Represents a tasklist.
  */

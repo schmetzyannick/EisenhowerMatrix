@@ -15,8 +15,8 @@
     "frontend:test": "ng test",
     "backend:serve:dev": "npm run backend:build:dev && node --inspect ./dist/backend/index.js",
     "backend:build:dev": "cross-env NODE_ENV=development webpack --env development",
-    "lint": "eslint ./backend ./frontend --ext .ts",
-    "lint:fix": "eslint ./backend ./frontend --ext .ts --fix"
+    "lint": "eslint ./backend ./frontend ./shared --ext .ts",
+    "lint:fix": "eslint ./backend ./frontend ./shared --ext .ts --fix"
   },
   "repository": {
     "type": "git",
