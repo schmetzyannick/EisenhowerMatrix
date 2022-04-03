@@ -2,7 +2,13 @@
   <mat-checkbox (change)="checkboxHandler($event.checked)" [checked]="doneState"></mat-checkbox>
   <mat-form-field appearance="fill">
     <mat-label>Task</mat-label>
-    <input matInput [(ngModel)]="desc" (change)="sendChangeToParent();" />
+    <textarea matInput
+    cdkTextareaAutosize
+    #autosize="cdkTextareaAutosize"
+    matInput [(ngModel)]="desc"
+    cdkAutosizeMinRows="1"
+    cdkAutosizeMaxRows="3"
+    (change)="sendChangeToParent();"></textarea>
     <button type="button" matSuffix mat-icon-button (click)="removeTask(); $event.preventDefault()">
       <mat-icon>delete</mat-icon>
     </button>

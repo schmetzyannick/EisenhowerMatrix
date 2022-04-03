@@ -1,5 +1,7 @@
-import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input, ViewChild, NgZone} from '@angular/core';
+import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {ITask} from 'src/utils/ITask';
+import {take} from 'rxjs/operators';
 
 /**
  * The Task component.
@@ -18,8 +20,14 @@ export class TaskComponent implements OnInit, ITask {
     @Output() deleteInParent: EventEmitter<[string, string]> = new EventEmitter();
     @Output() changeTaskValue: EventEmitter<[string, string, string, number]> = new EventEmitter();
     @Output() checkBoxClicked: EventEmitter<[string, string, boolean]> = new EventEmitter();
+    // eslint-disable-next-line
+    // @ts-ignore
+    @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
-    constructor() {
+    /**
+     * @param _ngZone Https://material.angular.io/cdk/text-field/overview.
+     */
+    constructor(private _ngZone: NgZone) {
         this.desc = '';
         this.ident = '';
         this.listName = '';
@@ -32,6 +40,14 @@ export class TaskComponent implements OnInit, ITask {
      */
     public ngOnInit(): void {
         //no op
+    }
+
+    /**
+     * Textarea resize trigger.
+     */
+    public triggerResize(): void {
+        // Wait for changes to be applied, then trigger textarea resize.
+        this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
     }
 
     /**
