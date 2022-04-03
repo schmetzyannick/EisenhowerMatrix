@@ -12,7 +12,7 @@ The project extends the Einsenhower Matrix by a Done and Backlog column. The und
 
 # Installation Windows
 
-Be sure that Node.js (https://nodejs.org/en/) is installed on your Host. You will need to install Postgres (https://www.postgresql.org/) as well. After installing both, please donwload this repo as a zip file (and unzip it). Now, you have to configure the service to use the correct postgres db. Edit/Add the following entries in the file ./backend/env.json:
+Run the Installer as Administrator. After that, you have to configure the service to use the correct postgres db. Edit/Add the following entries in the file C:\Eisenhowermatrix\dist\backend\env.json:
 | Entry | Description | Default |
 | --- | --- | --- |
 | postgresHost | DNS name or IP adress of the host, where you installed the postgres DB. | localhost |
