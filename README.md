@@ -21,8 +21,7 @@ Run the Installer as Administrator. After that, you have to configure the servic
 | postgresUser | Username to login to the postgres DB | postgres |
 | postgresPassword | Password to login to the postgres DB | postgres |
 
-After setting the variables, you can execute the ./install/install_windows.bat, which will install the service as a windows service.
-
+After setting the variables, pleas restart the Windows Service.
 # Installation Linux
 
 Download and configure Node, Postgres and this Repo as explained in "Installation Windows". After you have set the env variables, please run the following commands:
