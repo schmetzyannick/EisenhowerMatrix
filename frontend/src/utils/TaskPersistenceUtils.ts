@@ -1,9 +1,9 @@
 import {TaskSection} from './TaskSection';
 import {IApiTaskList} from '../../../shared/types/IApiTaskList';
 import {IApiTask} from '../../../shared/types/IApiTask';
-import {AppComponent} from 'src/app/app.component';
 import {isDevMode} from '@angular/core';
 import {TaskListEnum} from '../../../shared/types/TaskListEnum';
+import { MatrixComponent } from 'src/app/matrix/matrix.component';
 
 /**
  * TaskPersistenceUtils.
@@ -82,11 +82,11 @@ export class TaskPersistenceUtils {
     /**
      * Load all tasks from the backend.
      * @param sections Sections, to lkoad the tasks for.
-     * @param app App, to load the tasks into.
+     * @param matrix Component, to load the tasks into.
      */
     public static async loadAllTaskSections(
         sections: TaskSection[],
-        app: AppComponent,
+        matrix: MatrixComponent,
     ): Promise<{listRefs: TaskSection[]; counter: number}> {
         // load sections from local storage
         let counter = 1;
@@ -95,12 +95,12 @@ export class TaskPersistenceUtils {
         const taskLists = (await taskListsResp.json()).taskLists as IApiTaskList[];
         if (taskLists.length === 0) {
             const listNames = [
-                app.backLogSection.sectionTitle,
-                app.trashSection.sectionTitle,
-                app.delegateSection.sectionTitle,
-                app.nowSection.sectionTitle,
-                app.ownSection.sectionTitle,
-                app.doneSection.sectionTitle,
+                matrix.backLogSection.sectionTitle,
+                matrix.trashSection.sectionTitle,
+                matrix.delegateSection.sectionTitle,
+                matrix.nowSection.sectionTitle,
+                matrix.ownSection.sectionTitle,
+                matrix.doneSection.sectionTitle,
             ];
             return await TaskPersistenceUtils.createSections(listNames);
         } else {

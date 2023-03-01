@@ -2,20 +2,24 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatLegacyCardModule as MatCardModule} from '@angular/material/legacy-card';
+import { MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
-import {MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
-import {MatLegacyInputModule as MatInputModule} from '@angular/material/legacy-input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {FormsModule} from '@angular/forms';
-import {MatLegacyCheckboxModule as MatCheckboxModule} from '@angular/material/legacy-checkbox';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {TaskComponent} from './task/task.component';
+import { MatrixComponent } from './matrix/matrix.component';
+import { LoginComponent } from './login/login.component';
+import { RouterModule } from '@angular/router';
+import { AppRouter } from './AppRouter';
 
 /**
- * TODO: add comment.
+ * The app.
  */
 @NgModule({
-    declarations: [AppComponent, TaskComponent],
+    declarations: [AppComponent, TaskComponent, MatrixComponent, LoginComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -26,6 +30,7 @@ import {TaskComponent} from './task/task.component';
         DragDropModule,
         MatCheckboxModule,
         MatButtonModule,
+        RouterModule.forRoot(AppRouter.getRoutes())
     ],
     providers: [],
     bootstrap: [AppComponent],
