@@ -14,13 +14,14 @@ import { MatrixComponent } from './matrix/matrix.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { AppRouter } from './AppRouter';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 /**
  * The app.
  */
 @NgModule({
-    declarations: [AppComponent, TaskComponent, MatrixComponent, LoginComponent],
+    declarations: [AppComponent, TaskComponent, MatrixComponent, LoginComponent, ResetPasswordComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
