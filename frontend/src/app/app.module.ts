@@ -15,13 +15,14 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { AppRouter } from './AppRouter';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RegisterComponent } from './register/register.component';
 
 
 /**
  * The app.
  */
 @NgModule({
-    declarations: [AppComponent, TaskComponent, MatrixComponent, LoginComponent, ResetPasswordComponent],
+    declarations: [AppComponent, TaskComponent, MatrixComponent, LoginComponent, ResetPasswordComponent, RegisterComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

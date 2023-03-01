@@ -61,17 +61,16 @@
   font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.2s ease-out;
+  margin-top: 0.5rem;
 }
 .btn:hover {
   background-color: #205159;
 }
 
-.forgot-password {
+.forgot-password-button {
     display: block;
-    margin-top: 0.5rem;
     text-align: right;
     color: #205159;
     font-size: 0.9rem;
     text-decoration: none;
-    margin-bottom: 1rem;
   }
