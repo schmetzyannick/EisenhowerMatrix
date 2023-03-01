@@ -1,0 +1,67 @@
+
+@import "src/utils/variables";
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-form {
+  width: 400px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+}
+.title {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #205159;
+}
+.form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.form-control {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid #ccc;
+  background-color: transparent;
+  font-size: 1.1rem;
+}
+.form-control:focus {
+  outline: none;
+  border-color: $button;
+}
+.form-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #999;
+  font-size: 1.1rem;
+  transition: all 0.2s ease-out;
+  pointer-events: none;
+}
+.form-control:focus + .form-label,
+.form-control:not(:placeholder-shown) + .form-label {
+  transform: translateY(-1.5rem) scale(0.8);
+  color: $button;
+}
+.btn {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: $button;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+.btn:hover {
+  background-color: #205159;
+}
